@@ -7,4 +7,6 @@ public class Cpu {
   public static void setPeriodTime() {}
 
   public static void setQuotaTime() {}
+
+  public static void getStat() {}
 }
