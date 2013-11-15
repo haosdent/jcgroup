@@ -1,4 +1,4 @@
-package me.haosdent.cgroup.resource;
+package me.haosdent.cgroup.subsystem;
 
 public class Blkio {
   public static void setReadBpsThrottle() {};
