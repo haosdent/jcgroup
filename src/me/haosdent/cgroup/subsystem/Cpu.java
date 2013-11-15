@@ -1,16 +1,22 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Cpu {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void setShares() {}
+public class Cpu extends Common {
 
-  public static void setCfsPeriodTime() {}
+  public Cpu(Group group) {
+    super(group);
+  }
 
-  public static void setCfsQuotaTime() {}
+  public void setShares() {}
 
-  public static void setRtPeriodTime() {}
+  public void setCfsPeriodTime() {}
 
-  public static void setRtRuntimeTime() {}
+  public void setCfsQuotaTime() {}
 
-  public static void getStat() {}
+  public void setRtPeriodTime() {}
+
+  public void setRtRuntimeTime() {}
+
+  public void getStat() {}
 }

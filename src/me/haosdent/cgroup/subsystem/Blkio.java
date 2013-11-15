@@ -1,39 +1,46 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Blkio {
-  public static void setReadBpsThrottle() {};
+import me.haosdent.cgroup.manage.Group;
 
-  public static void setWriteBpsThrottle() {};
+public class Blkio extends Common {
 
-  public static void setReadIopsThrottle() {};
+  public Blkio(Group group) {
+    super(group);
+  }
 
-  public static void setWriteIopsThrottle() {};
+  public void setReadBpsThrottle() {}
 
-  public static void resetStats() {};
+  public void setWriteBpsThrottle() {}
 
-  public static void getIoTime() {}
+  public void setReadIopsThrottle() {}
 
-  public static void getSectors() {}
+  public void setWriteIopsThrottle() {}
 
-  public static void getAvgQueueSize() {}
+  public void resetStats() {}
 
-  public static void getGroupWaitTime() {}
+  public void getIoTime() {}
 
-  public static void getEmptyTime() {}
+  public void getSectors() {}
 
-  public static void getIdleTime() {}
+  public void getAvgQueueSize() {}
 
-  public static void getDequeueCount() {}
+  public void getGroupWaitTime() {}
 
-  public static void getIoServiceCount() {}
+  public void getEmptyTime() {}
 
-  public static void getIoServiceBytes() {}
+  public void getIdleTime() {}
 
-  public static void getIoServiceTime() {}
+  public void getDequeueCount() {}
 
-  public static void getIoWaitTime() {}
+  public void getIoServiceCount() {}
 
-  public static void getIoMergeCount() {}
+  public void getIoServiceBytes() {}
 
-  public static void getIoQueueCount() {}
+  public void getIoServiceTime() {}
+
+  public void getIoWaitTime() {}
+
+  public void getIoMergeCount() {}
+
+  public void getIoQueueCount() {}
 }

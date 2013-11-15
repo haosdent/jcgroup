@@ -1,8 +1,14 @@
 package me.haosdent.cgroup.subsystem;
 
-public class NetCls {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void setClassId() {}
+public class NetCls extends Common {
 
-  public static void getClassId() {}
+  public NetCls(Group group) {
+    super(group);
+  }
+
+  public void setClassId() {}
+
+  public void getClassId() {}
 }

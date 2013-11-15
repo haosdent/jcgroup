@@ -1,6 +1,12 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Cpuacct {
+import me.haosdent.cgroup.manage.Group;
+
+public class Cpuacct extends Common {
+
+  public Cpuacct(Group group) {
+    super(group);
+  }
 
   public void getUsage() {}
 

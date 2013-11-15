@@ -1,28 +1,34 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Cpuset {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void setCpus() {}
+public class Cpuset extends Common {
 
-  public static void setMems() {}
+  public Cpuset(Group group) {
+    super(group);
+  }
 
-  public static void setMemMigrate() {}
+  public void setCpus() {}
 
-  public static void setCpuExclusive() {}
+  public void setMems() {}
 
-  public static void setMemExclusive() {}
+  public void setMemMigrate() {}
 
-  public static void setMemHardwall() {}
+  public void setCpuExclusive() {}
 
-  public static void getMemPressure() {}
+  public void setMemExclusive() {}
 
-  public static void setMemPressureEnabled() {}
+  public void setMemHardwall() {}
 
-  public static void setMemSpreadPage() {}
+  public void getMemPressure() {}
 
-  public static void setMemSpreadSlab() {}
+  public void setMemPressureEnabled() {}
 
-  public static void setSchedLoadBlance() {}
+  public void setMemSpreadPage() {}
 
-  public static void setSchedRelaxDomainLevel() {}
+  public void setMemSpreadSlab() {}
+
+  public void setSchedLoadBlance() {}
+
+  public void setSchedRelaxDomainLevel() {}
 }

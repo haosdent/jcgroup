@@ -1,30 +1,36 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Memory {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void getStat() {}
+public class Memory extends Common {
 
-  public static void getPhysicalUsage() {}
+  public Memory(Group group) {
+    super(group);
+  }
 
-  public static void getWithSwapUsage() {}
+  public void getStat() {}
 
-  public static void getMaxPhysicalUsage() {}
+  public void getPhysicalUsage() {}
 
-  public static void getMaxWithSwapUsage() {}
+  public void getWithSwapUsage() {}
 
-  public static void setPhysicalUsageLimit() {}
+  public void getMaxPhysicalUsage() {}
 
-  public static void setWithSwapUsageLimit() {}
+  public void getMaxWithSwapUsage() {}
 
-  public static void getPhysicalFailCount() {}
+  public void setPhysicalUsageLimit() {}
 
-  public static void getWithSwapFailCount() {}
+  public void setWithSwapUsageLimit() {}
 
-  public static void setForceEmpty() {}
+  public void getPhysicalFailCount() {}
 
-  public static void setSwappiness() {}
+  public void getWithSwapFailCount() {}
 
-  public static void setUseHierarchy() {}
+  public void setForceEmpty() {}
 
-  public static void setOomControl() {}
+  public void setSwappiness() {}
+
+  public void setUseHierarchy() {}
+
+  public void setOomControl() {}
 }

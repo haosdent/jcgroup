@@ -1,14 +1,22 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Common {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void addThreadId() {}
+public abstract class Common {
 
-  public static void addThreadGroupId() {}
+  Group group;
 
-  public static void setEventControl() {}
+  public Common(Group group) {
+    this.group = group;
+  }
 
-  public static void setNotifyOnRelease() {}
+  public void addThreadId() {}
 
-  public static void setReleaseAgent() {}
+  public void addThreadGroupId() {}
+
+  public void setEventControl() {}
+
+  public void setNotifyOnRelease() {}
+
+  public void setReleaseAgent() {}
 }

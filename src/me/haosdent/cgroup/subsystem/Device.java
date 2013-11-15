@@ -1,10 +1,16 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Device {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void setAllow() {}
+public class Device extends Common {
 
-  public static void setDeny() {}
+  public Device(Group group) {
+    super(group);
+  }
 
-  public static void getList() {}
+  public void setAllow() {}
+
+  public void setDeny() {}
+
+  public void getList() {}
 }

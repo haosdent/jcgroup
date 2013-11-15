@@ -1,10 +1,16 @@
 package me.haosdent.cgroup.subsystem;
 
-public class NetPrio {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void getPrioId() {};
+public class NetPrio extends Common {
 
-  public static void getIfPrioMap() {};
+  public NetPrio(Group group) {
+    super(group);
+  }
 
-  public static void addIfPrioMap() {};
+  public void getPrioId() {};
+
+  public void getIfPrioMap() {};
+
+  public void addIfPrioMap() {};
 }
