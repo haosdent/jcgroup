@@ -1,8 +1,14 @@
 package me.haosdent.cgroup.subsystem;
 
-public class Freezer {
+import me.haosdent.cgroup.manage.Group;
 
-  public static void setState() {}
+public class Freezer extends Common {
 
-  public static void getState() {}
+  public Freezer(Group group) {
+    super(group);
+  }
+
+  public void setState() {}
+
+  public void getState() {}
 }

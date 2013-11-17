@@ -1,22 +1,20 @@
 package me.haosdent.cgroup.manage;
 
+import me.haosdent.cgroup.util.Shell;
+
 public class Admin {
 
-  public static void create() {}
+  private Shell shell;
 
-  public static void delete() {}
+  public Admin() {
+    this.shell = new Shell(this);
+  }
 
-  public static void mount() {}
+  public Shell getShell() {
+    return shell;
+  }
 
-  public static void umount() {}
-
-  public static void classify() {}
-
-  public static void get() {}
-
-  public static void set() {}
-
-  public static void clear() {}
-
-  public static void exec() {}
+  public Group createGroup(String name) {
+    return new Group(name, shell);
+  }
 }
