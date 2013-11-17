@@ -1,5 +1,7 @@
 package me.haosdent.cgroup.util;
 
+import static me.haosdent.cgroup.util.Constants.*;
+
 import me.haosdent.cgroup.manage.Admin;
 
 public class Shell {
@@ -10,21 +12,94 @@ public class Shell {
     this.admin = admin;
   }
 
-  public void mount() {}
+  private StringBuffer getSubsystemsFlag(int subsystems) {
+    StringBuffer sb = new StringBuffer();
+    if ((subsystems & SUBSYS_BLKIO) != 0) {
+      sb.append(SUBSYS_BLKIO_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_CPU) != 0) {
+      sb.append(SUBSYS_CPU_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_CPUACCT) != 0) {
+      sb.append(SUBSYS_CPUACCT_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_CPUSET) != 0) {
+      sb.append(SUBSYS_CPUSET_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_DEVICE) != 0) {
+      sb.append(SUBSYS_DEVICE_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_FREEZER) != 0) {
+      sb.append(SUBSYS_FREEZER_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_MEMORY) != 0) {
+      sb.append(SUBSYS_MEMORY_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_NET_CLS) != 0) {
+      sb.append(SUBSYS_NET_CLS_STR);
+      sb.append(',');
+    }
+    if ((subsystems & SUBSYS_NET_PRIO) != 0) {
+      sb.append(SUBSYS_NET_PRIO_STR);
+      sb.append(',');
+    }
+    sb.deleteCharAt(sb.length() - 1);
+    return sb;
+  }
 
-  public void umount() {}
+  public void exec(String cmd) {
+    //TODO
+  }
 
-  public void cgcreate() {}
+  public void mount(String name, int subsystems) {
+    String cmd = String.format(SHELL_MOUNT, getSubsystemsFlag(subsystems), name);
+    exec(cmd);
+  }
 
-  public void cgdelete() {}
+  public void umount(String name) {
+    String cmd = String.format(SHELL_UMOUNT, name);
+    exec(cmd);
+  }
 
-  public void cgclassify() {}
+  public void cgcreate(String group, int subsystems) {
+    String cmd = String.format(SHELL_CG_CREATE, getSubsystemsFlag(subsystems), group);
+    exec(cmd);
+  }
 
-  public void cgset() {}
+  public void cgdelete(String group) {
+    String cmd = String.format(SHELL_CG_DELETE, group);
+    exec(cmd);
+  }
 
-  public void cgget() {}
+  public void cgclassify(String group, int subsystems, int task) {
+    String cmd = String.format(SHELL_CG_CLASSIFY, group, task);
+    exec(cmd);
+  }
 
-  public void cgclear() {}
+  public void cgset(String group, String prop, String value) {
+    String cmd = String.format(SHELL_CG_SET, prop, value, group);
+    exec(cmd);
+  }
 
-  public void cgexec() {}
+  public void cgget(String group, String prop) {
+    String cmd = String.format(SHELL_CG_GET, prop, group);
+    exec(cmd);
+  }
+
+  public void cgclear() {
+    String cmd = SHELL_CG_CLEAR;
+    exec(cmd);
+  }
+
+  public void cgexec(String group, int subsystems, String command) {
+    String cmd = String.format(SHELL_CG_EXEC, getSubsystemsFlag(subsystems), group, command);
+    exec(cmd);
+  }
 }

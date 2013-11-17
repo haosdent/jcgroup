@@ -1,5 +1,7 @@
 package me.haosdent.cgroup.manage;
 
+import static me.haosdent.cgroup.util.Constants.*;
+
 import me.haosdent.cgroup.util.Shell;
 
 public class Admin {
@@ -8,6 +10,7 @@ public class Admin {
 
   public Admin() {
     this.shell = new Shell(this);
+    shell.mount(SUBSYS_BLKIO | SUBSYS_CPU, "cgroup");
   }
 
   public Shell getShell() {
