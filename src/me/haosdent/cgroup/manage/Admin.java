@@ -37,7 +37,7 @@ public class Admin {
   }
 
   public Group createGroup(String name, int subsystems) throws IOException {
-    Group group = new Group(name, subsystems, this);
+    Group group = new Group(this, name, subsystems);
     return group;
   }
 }
