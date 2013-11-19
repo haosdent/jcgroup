@@ -3,9 +3,15 @@ package me.haosdent.cgroup.manage;
 import me.haosdent.cgroup.subsystem.*;
 import me.haosdent.cgroup.util.Shell;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
 public class Group {
 
   private Shell shell;
+  private Admin admin;
+  private String name;
 
   private Blkio blkio;
   private Cpu cpu;
@@ -17,16 +23,31 @@ public class Group {
   private NetCls netCls;
   private NetPrio netPrio;
 
-  protected Group(String name, Shell shell) {
-    this.shell = shell;
+  protected Group(Admin admin, String name, int subsystems) throws IOException {
+    this.admin = admin;
+    this.shell = admin.getShell();
+    shell.cgcreate(name, subsystems);
+    admin.getGroupList().add(this);
   }
 
-  public void delete() {
-    //TODO
+  public void delete() throws IOException {
+    shell.cgdelete(name);
+    List<Group> groupList = admin.getGroupList();
+    synchronized (groupList) {
+      groupList.remove(this);
+    }
+  }
+
+  public String getName() {
+    return name;
   }
 
   public Shell getShell() {
     return shell;
+  }
+
+  public Admin getAdmin() {
+    return admin;
   }
 
   public Blkio getBlkio() {
