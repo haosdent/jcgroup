@@ -5,6 +5,7 @@ import me.haosdent.cgroup.util.Shell;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Group {
@@ -22,6 +23,8 @@ public class Group {
   private Memory memory;
   private NetCls netCls;
   private NetPrio netPrio;
+
+  private List<Common> subSystemList = new LinkedList<Common>();
 
   protected Group(Admin admin, String name, int subsystems) throws IOException {
     this.admin = admin;
@@ -48,6 +51,10 @@ public class Group {
 
   public Admin getAdmin() {
     return admin;
+  }
+
+  public List<Common> getSubSystemList() {
+    return subSystemList;
   }
 
   public Blkio getBlkio() {

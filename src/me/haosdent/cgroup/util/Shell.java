@@ -86,7 +86,7 @@ public class Shell {
   }
 
   public void cgclassify(String group, int subsystems, int task) throws IOException {
-    String cmd = String.format(SHELL_CG_CLASSIFY, group, task);
+    String cmd = String.format(SHELL_CG_CLASSIFY, group, getSubsystemsFlag(subsystems), task);
     exec(cmd);
   }
 
