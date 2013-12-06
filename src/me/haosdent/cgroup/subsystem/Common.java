@@ -10,10 +10,10 @@ import java.util.List;
 
 public abstract class Common {
 
-  private Shell shell;
-  private Group group;
+  protected Shell shell;
+  protected Group group;
 
-  public static final int subsystem = Constants.SUBSYS_COMMON;
+  public static final int SUBSYS = Constants.SUBSYS_COMMON;
   public List<Integer> taskList = new LinkedList<Integer>();
 
   public Common(Group group) {
@@ -33,18 +33,20 @@ public abstract class Common {
     return shell;
   }
 
-  public void addThreadId(int task) throws IOException {
-    shell.cgclassify(group.getName(), subsystem, task);
+  public void addTask(int task) throws IOException {
+    shell.cgclassify(group.getName(), SUBSYS, task);
     taskList.add(task);
   }
 
-  public void addThreadGroupId() {
+  public void setEventControl() {
     //TODO
   }
 
-  public void setEventControl() {}
+  public void setNotifyOnRelease() {
+    //TODO
+  }
 
-  public void setNotifyOnRelease() {}
-
-  public void setReleaseAgent() {}
+  public void setReleaseAgent() {
+    //TODO
+  }
 }
