@@ -16,7 +16,7 @@ public class Shell {
     this.admin = admin;
   }
 
-  private StringBuffer getSubsystemsFlag(int subsystems) {
+  private static StringBuffer getSubsystemsFlag(int subsystems) {
     StringBuffer sb = new StringBuffer();
     if ((subsystems & SUBSYS_BLKIO) != 0) {
       sb.append(SUBSYS_BLKIO_STR);

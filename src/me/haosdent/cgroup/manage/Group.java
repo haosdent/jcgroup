@@ -4,7 +4,6 @@ import me.haosdent.cgroup.subsystem.*;
 import me.haosdent.cgroup.util.Shell;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class Group {
   private Cpu cpu;
   private Cpuacct cpuacct;
   private Cpuset cpuset;
-  private Device device;
+  private Devices devices;
   private Freezer freezer;
   private Memory memory;
   private NetCls netCls;
@@ -87,12 +86,12 @@ public class Group {
     return cpuset;
   }
 
-  public Device getDevice() {
-    if (device == null) {
-      device = new Device(this);
+  public Devices getDevices() {
+    if (devices == null) {
+      devices = new Devices(this);
     }
 
-    return device;
+    return devices;
   }
 
   public Freezer getFreezer() {
