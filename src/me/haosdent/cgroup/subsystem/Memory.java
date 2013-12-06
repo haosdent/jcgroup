@@ -1,8 +1,11 @@
 package me.haosdent.cgroup.subsystem;
 
 import me.haosdent.cgroup.manage.Group;
+import me.haosdent.cgroup.util.Constants;
 
 public class Memory extends Common {
+
+  public static final int subsystem = Constants.SUBSYS_MEMORY;
 
   public Memory(Group group) {
     super(group);

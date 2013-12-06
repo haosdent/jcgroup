@@ -1,6 +1,7 @@
 package me.haosdent.cgroup.subsystem;
 
 import me.haosdent.cgroup.manage.Group;
+import me.haosdent.cgroup.util.Constants;
 import me.haosdent.cgroup.util.Shell;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ public abstract class Common {
   private Shell shell;
   private Group group;
 
-  public final int subsystem = 0;
+  public static final int subsystem = Constants.SUBSYS_COMMON;
   public List<Integer> taskList = new LinkedList<Integer>();
 
   public Common(Group group) {

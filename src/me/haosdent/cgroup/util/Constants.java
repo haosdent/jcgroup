@@ -13,6 +13,7 @@ public class Constants {
   public static final String SHELL_CG_CLASSIFY = "cgclassify -g %s:%s %s";
   public static final String SHELL_CG_EXEC = "cgexec -g %s:%s %s %s";
 
+  public static final int SUBSYS_COMMON = 0;
   public static final int SUBSYS_BLKIO = 1;
   public static final int SUBSYS_CPU = 2;
   public static final int SUBSYS_CPUACCT = 4;
