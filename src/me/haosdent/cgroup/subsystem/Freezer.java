@@ -22,7 +22,7 @@ public class Freezer extends Common {
     shell.cgset(group.getName(), PROP_FREEZER_STATE, state);
   }
 
-  public String getState() {
+  public String getState() throws IOException {
     String state = shell.cgget(group.getName(), PROP_FREEZER_STATE);
     return state;
   }
