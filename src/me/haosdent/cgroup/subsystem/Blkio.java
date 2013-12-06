@@ -15,6 +15,18 @@ public class Blkio extends Common {
 
   public static final String PROP_BLKIO_RESET_STATS = "blkio.reset_stats";
   public static final String PROP_BLKIO_TIME = "blkio.time";
+  public static final String PROP_BLKIO_SECTORS = "blkio.sectors";
+  public static final String PROP_BLKIO_AVG_QUEUE_SIZE = "blkio.avg_queue_size";
+  public static final String PROP_BLKIO_GROUP_WAIT_TIME = "blkio.group_wait_time";
+  public static final String PROP_BLKIO_EMPTY_TIME = "blkio.empty_time";
+  public static final String PROP_BLKIO_IDLE_TIME = "blkio.idle_time";
+  public static final String PROP_BLKIO_DEQUEUE = "blkio.dequeue";
+  public static final String PROP_BLKIO_IO_SERIVICED = "blkio.io_serviced";
+  public static final String PROP_BLKIO_IO_SERIVICE_BYTES = "blkio.io_service_bytes";
+  public static final String PROP_BLKIO_IO_SERIVICE_TIME = "blkio.io_service_time";
+  public static final String PROP_BLKIO_IO_WAIT_TIME = "blkio.io_wait_time";
+  public static final String PROP_BLKIO_IO_MERGED = "blkio.io_merged";
+  public static final String PROP_BLKIO_IO_QUEUED = "blkio.io_queued";
 
   public Blkio(Group group) {
     super(group);
@@ -50,29 +62,68 @@ public class Blkio extends Common {
     shell.cgset(group.getName(), PROP_BLKIO_RESET_STATS, value + "");
   }
 
-  public void getIoTime() {}
+  public long getIoTime() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_TIME);
+    return Long.parseLong(result);
+  }
 
-  public void getSectors() {}
+  public long getSectors() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_SECTORS);
+    return Long.parseLong(result);
+  }
 
-  public void getAvgQueueSize() {}
+  public int getAvgQueueSize() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_AVG_QUEUE_SIZE);
+    return Integer.parseInt(result);
+  }
 
-  public void getGroupWaitTime() {}
+  public long getGroupWaitTime() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_GROUP_WAIT_TIME);
+    return Long.parseLong(result);
+  }
 
-  public void getEmptyTime() {}
+  public long getEmptyTime() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_EMPTY_TIME);
+    return Long.parseLong(result);
+  }
 
-  public void getIdleTime() {}
+  public long getIdleTime() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_IDLE_TIME);
+    return Long.parseLong(result);
+  }
 
-  public void getDequeueCount() {}
+  public int getDequeueCount() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_DEQUEUE);
+    return Integer.parseInt(result);
+  }
 
-  public void getIoServiceCount() {}
+  public int getIoServiceCount() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICED);
+    return Integer.parseInt(result);
+  }
 
-  public void getIoServiceBytes() {}
+  public int getIoServiceBytes() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICE_BYTES);
+    return Integer.parseInt(result);
+  }
 
-  public void getIoServiceTime() {}
+  public long getIoServiceTime() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICE_TIME);
+    return Long.parseLong(result);
+  }
 
-  public void getIoWaitTime() {}
+  public long getIoWaitTime() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_WAIT_TIME);
+    return Long.parseLong(result);
+  }
 
-  public void getIoMergeCount() {}
+  public int getIoMergeCount() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_MERGED);
+    return Integer.parseInt(result);
+  }
 
-  public void getIoQueueCount() {}
+  public int getIoQueueCount() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_QUEUED);
+    return Integer.parseInt(result);
+  }
 }

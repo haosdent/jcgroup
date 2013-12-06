@@ -4,7 +4,9 @@ import static me.haosdent.cgroup.util.Constants.*;
 
 import me.haosdent.cgroup.manage.Admin;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Shell {
 
@@ -56,17 +58,26 @@ public class Shell {
     return sb;
   }
 
-  public void exec(String cmd) throws IOException {
+  public String exec(String cmd) throws IOException {
     Process process = Runtime.getRuntime().exec(cmd);
     try {
       process.waitFor();
+      BufferedReader reader =
+          new BufferedReader(new InputStreamReader(process.getInputStream()));
+      StringBuffer sb = new StringBuffer();
+      String line = null;
+      while ((line = reader.readLine()) != null) {
+        sb.append(line);
+      }
+      return sb.toString();
     } catch (InterruptedException ie) {
       throw new IOException(ie.toString());
     }
   }
 
   public void mount(String name, int subsystems) throws IOException {
-    String cmd = String.format(SHELL_MOUNT, getSubsystemsFlag(subsystems), name);
+    String cmd =
+        String.format(SHELL_MOUNT, getSubsystemsFlag(subsystems), name);
     exec(cmd);
   }
 
@@ -76,7 +87,8 @@ public class Shell {
   }
 
   public void cgcreate(String group, int subsystems) throws IOException {
-    String cmd = String.format(SHELL_CG_CREATE, getSubsystemsFlag(subsystems), group);
+    String cmd =
+        String.format(SHELL_CG_CREATE, getSubsystemsFlag(subsystems), group);
     exec(cmd);
   }
 
@@ -85,8 +97,11 @@ public class Shell {
     exec(cmd);
   }
 
-  public void cgclassify(String group, int subsystems, int task) throws IOException {
-    String cmd = String.format(SHELL_CG_CLASSIFY, group, getSubsystemsFlag(subsystems), task);
+  public void cgclassify(String group, int subsystems, int task)
+      throws IOException {
+    String cmd =
+        String.format(SHELL_CG_CLASSIFY, group, getSubsystemsFlag(subsystems),
+            task);
     exec(cmd);
   }
 
@@ -95,9 +110,9 @@ public class Shell {
     exec(cmd);
   }
 
-  public void cgget(String group, String prop) throws IOException {
+  public String cgget(String group, String prop) throws IOException {
     String cmd = String.format(SHELL_CG_GET, prop, group);
-    exec(cmd);
+    return exec(cmd);
   }
 
   public void cgclear() throws IOException {
@@ -105,8 +120,11 @@ public class Shell {
     exec(cmd);
   }
 
-  public void cgexec(String group, int subsystems, String command) throws IOException {
-    String cmd = String.format(SHELL_CG_EXEC, getSubsystemsFlag(subsystems), group, command);
+  public void cgexec(String group, int subsystems, String command)
+      throws IOException {
+    String cmd =
+        String.format(SHELL_CG_EXEC, getSubsystemsFlag(subsystems), group,
+            command);
     exec(cmd);
   }
 }
