@@ -32,8 +32,8 @@ public class Devices extends Common {
     super(group);
   }
 
-  public static StringBuffer getTypesFlag(int types) {
-    StringBuffer sb = new StringBuffer();
+  public static StringBuilder getTypesFlag(int types) {
+    StringBuilder sb = new StringBuilder();
     if ((types & TYPE_ALL) != 0) {
       sb.append(TYPE_ALL_CH);
     }
@@ -46,8 +46,8 @@ public class Devices extends Common {
     return sb;
   }
 
-  public static StringBuffer getAccessesFlag(int accesses) {
-    StringBuffer sb = new StringBuffer();
+  public static StringBuilder getAccessesFlag(int accesses) {
+    StringBuilder sb = new StringBuilder();
     if ((accesses & ACCESS_READ) != 0) {
       sb.append(ACCESS_READ_CH);
     }
@@ -61,7 +61,7 @@ public class Devices extends Common {
   }
 
   private void setPermission(String prop, int types, int major, int minor, int accesses) throws IOException {
-    StringBuffer sb = getTypesFlag(types);
+    StringBuilder sb = getTypesFlag(types);
     sb.append(' ');
     sb.append(major);
     sb.append(':');

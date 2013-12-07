@@ -16,8 +16,8 @@ public class Shell {
     this.admin = admin;
   }
 
-  private static StringBuffer getSubsystemsFlag(int subsystems) {
-    StringBuffer sb = new StringBuffer();
+  private static StringBuilder getSubsystemsFlag(int subsystems) {
+    StringBuilder sb = new StringBuilder();
     if ((subsystems & SUBSYS_BLKIO) != 0) {
       sb.append(SUBSYS_BLKIO_STR);
       sb.append(',');
@@ -64,7 +64,7 @@ public class Shell {
       process.waitFor();
       BufferedReader reader =
           new BufferedReader(new InputStreamReader(process.getInputStream()));
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       String line = null;
       while ((line = reader.readLine()) != null) {
         sb.append(line);

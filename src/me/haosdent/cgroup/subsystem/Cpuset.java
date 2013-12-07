@@ -26,40 +26,40 @@ public class Cpuset extends Common {
   }
 
   public void setCpus(int[] nums) throws IOException {
-    StringBuffer sb = new StringBuffer();
-    for (int i = 0, l = nums.length; i < l; i++) {
-      sb.append(nums[i]);
+    StringBuilder sb = new StringBuilder();
+    for (int num : nums) {
+      sb.append(num);
       sb.append(',');
     }
     shell.cgset(group.getName(), PROP_CPUSET_CPUS, sb.toString());
   }
 
   public void setMems(int[] nums) throws IOException {
-    StringBuffer sb = new StringBuffer();
-    for (int i = 0, l = nums.length; i < l; i++) {
-      sb.append(nums[i]);
+    StringBuilder sb = new StringBuilder();
+    for (int num : nums) {
+      sb.append(num);
       sb.append(',');
     }
     shell.cgset(group.getName(), PROP_CPUSET_MEMS, sb.toString());
   }
 
   public void setMemMigrate(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_MIGRATE, value + "");
   }
 
   public void setCpuExclusive(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEM_EXCLUSIVE, value + "");
   }
 
   public void setMemExclusive(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEM_EXCLUSIVE, value + "");
   }
 
   public void setMemHardwall(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEM_HARDWALL, value + "");
   }
 
@@ -69,26 +69,27 @@ public class Cpuset extends Common {
   }
 
   public void setMemPressureEnabled(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_PRESSURE_ENABLED, value + "");
   }
 
   public void setMemSpreadPage(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_SPREAD_PAGE, value + "");
   }
 
   public void setMemSpreadSlab(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_SPREAD_SLAB, value + "");
   }
 
   public void setSchedLoadBlance(boolean flag) throws IOException {
-    int value = flag == true? 1 : 0;
+    int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_SCHED_LOAD_BALANCE, value + "");
   }
 
   public void setSchedRelaxDomainLevel(int value) throws IOException {
-    shell.cgset(group.getName(), PROP_CPUSET_SCHED_RELAX_DOMAIN_LEVEL, value + "");
+    shell.cgset(group.getName(), PROP_CPUSET_SCHED_RELAX_DOMAIN_LEVEL, value + ""
+    );
   }
 }

@@ -33,7 +33,7 @@ public class Blkio extends Common {
   }
 
   private void setThrottle(String prop, int major, int minor, int speed) throws IOException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(major);
     sb.append(':');
     sb.append(minor);

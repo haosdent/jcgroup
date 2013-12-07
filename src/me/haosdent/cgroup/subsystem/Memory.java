@@ -3,6 +3,8 @@ package me.haosdent.cgroup.subsystem;
 import me.haosdent.cgroup.manage.Group;
 import me.haosdent.cgroup.util.Constants;
 
+import java.io.IOException;
+
 public class Memory extends Common {
 
   public static final int SUBSYS = Constants.SUBSYS_MEMORY;
@@ -24,29 +26,98 @@ public class Memory extends Common {
     super(group);
   }
 
-  public void getStat() {}
+  public static class Stat {
+    public final long cacheSize;
+    public final long rssSize;
+    public final long mappedFileSize;
+    public final long pgpginNum;
+    public final long pgpgoutNum;
+    public final long swapSize;
+    public final long activeAnonSize;
+    public final long inactiveAnonSize;
+    public final long activeFileSize;
+    public final long inactiveFileSize;
+    public final long unevictableSize;
+    public final long hierarchicalMemoryLimitSize;
+    public final long hierarchicalMemswLimitSize;
 
-  public void getPhysicalUsage() {}
+    public Stat(String statStr) {
+      //TODO
+      this.cacheSize = 0;
+      this.rssSize = 0;
+      this.mappedFileSize = 0;
+      this.pgpginNum = 0;
+      this.pgpgoutNum = 0;
+      this.swapSize = 0;
+      this.activeAnonSize = 0;
+      this.inactiveAnonSize = 0;
+      this.activeFileSize = 0;
+      this.inactiveFileSize = 0;
+      this.unevictableSize = 0;
+      this.hierarchicalMemoryLimitSize = 0;
+      this.hierarchicalMemswLimitSize = 0;
+    }
+  }
 
-  public void getWithSwapUsage() {}
+  public Stat getStat() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_MEMORY_STAT);
+    Stat stat = new Stat(result);
+    return stat;
+  }
 
-  public void getMaxPhysicalUsage() {}
+  public long getPhysicalUsage() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_MEMORY_USAGE_IN_BYTES);
+    return Long.parseLong(result);
+  }
 
-  public void getMaxWithSwapUsage() {}
+  public long getWithSwapUsage() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_MEMORY_MEMSW_USAGE_IN_BYTES);
+    return Long.parseLong(result);
+  }
 
-  public void setPhysicalUsageLimit() {}
+  public long getMaxPhysicalUsage() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_MEMORY_MAX_USAGE_IN_BYTES);
+    return Long.parseLong(result);
+  }
 
-  public void setWithSwapUsageLimit() {}
+  public long getMaxWithSwapUsage() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_MEMORY_MEMSW_USAGE_IN_BYTES);
+    return Long.parseLong(result);
+  }
 
-  public void getPhysicalFailCount() {}
+  public void setPhysicalUsageLimit(long value) throws IOException {
+    shell.cgset(group.getName(), PROP_MEMORY_LIMIT_IN_BYTES, value + "");
+  }
 
-  public void getWithSwapFailCount() {}
+  public void setWithSwapUsageLimit(long value) throws IOException {
+    shell.cgset(group.getName(), PROP_MEMORY_MEMSW_LIMIT_IN_BYTES, value + "");
+  }
 
-  public void setForceEmpty() {}
+  public int getPhysicalFailCount() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_MEMORY_FAILCNT);
+    return Integer.parseInt(result);
+  }
 
-  public void setSwappiness() {}
+  public int getWithSwapFailCount() throws IOException {
+    String result = shell.cgget(group.getName(), PROP_MEMORY_MEMSW_FAILCNT);
+    return Integer.parseInt(result);
+  }
 
-  public void setUseHierarchy() {}
+  public void clearForceEmpty() throws IOException {
+    shell.cgset(group.getName(), PROP_MEMORY_FORCE_EMPTY, 0 + "");
+  }
 
-  public void setOomControl() {}
+  public void setSwappiness(int value) throws IOException {
+    shell.cgset(group.getName(), PROP_MEMORY_FORCE_EMPTY, value + "");
+  }
+
+  public void setUseHierarchy(boolean flag) throws IOException {
+    int value = flag? 1 : 0;
+    shell.cgset(group.getName(), PROP_MEMORY_USE_HIERARCHY, value + "");
+  }
+
+  public void setOomControl(boolean flag) throws IOException {
+    int value = flag? 1 : 0;
+    shell.cgset(group.getName(), PROP_MEMORY_OOM_CONTROL, value + "");
+  }
 }
