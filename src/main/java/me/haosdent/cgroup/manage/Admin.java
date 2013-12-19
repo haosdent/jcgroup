@@ -12,10 +12,12 @@ public class Admin {
 
   private Shell shell;
   private String name;
+  private String password;
   private List<Group> groupList = new LinkedList<Group>();
 
-  public Admin(String name, int subsystems) throws IOException {
+  public Admin(String name, String password, int subsystems) throws IOException {
     this.name = name;
+    this.password = password;
     this.shell = new Shell(this);
     shell.mount(name, subsystems);
   }
@@ -30,6 +32,10 @@ public class Admin {
 
   public String getName() {
     return name;
+  }
+
+  public String getPassword() {
+    return password;
   }
 
   public List<Group> getGroupList() {
