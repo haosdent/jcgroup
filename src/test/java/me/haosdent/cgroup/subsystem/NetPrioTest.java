@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestCommon {
+public class NetPrioTest {
 
   @Before
   public void setUp() {}
@@ -13,14 +13,11 @@ public class TestCommon {
   public void tearDown() {}
 
   @Test
-  public void testAddTask() {}
+  public void testGetPrioId() {}
 
   @Test
-  public void testSetEventControl() {}
+  public void testGetIfPrioMap() {}
 
   @Test
-  public void testSetNotifyOnRelease() {}
-
-  @Test
-  public void testSetReleaseAgent() {}
+  public void testAddIfPrioMap() {}
 }

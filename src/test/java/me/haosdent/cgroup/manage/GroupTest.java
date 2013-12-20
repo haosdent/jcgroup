@@ -1,10 +1,10 @@
-package me.haosdent.cgroup.subsystem;
+package me.haosdent.cgroup.manage;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestFreezer {
+public class GroupTest {
 
   @Before
   public void setUp() {}
@@ -13,8 +13,5 @@ public class TestFreezer {
   public void tearDown() {}
 
   @Test
-  public void testSetState() {}
-
-  @Test
-  public void testGetState() {}
+  public void testDelete() {}
 }

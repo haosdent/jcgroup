@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestBlkio {
+public class BlkioTest {
 
   @Before
   public void setUp() {}

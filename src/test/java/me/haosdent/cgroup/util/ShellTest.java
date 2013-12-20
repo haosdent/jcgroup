@@ -10,9 +10,9 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class TestShell {
+public class ShellTest {
 
-  private static final Logger LOG = LoggerFactory.getLogger(TestShell.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ShellTest.class);
 
   @Before
   public void setUp() {}

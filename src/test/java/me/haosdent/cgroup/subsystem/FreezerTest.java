@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestDevices {
+public class FreezerTest {
 
   @Before
   public void setUp() {}
@@ -13,11 +13,8 @@ public class TestDevices {
   public void tearDown() {}
 
   @Test
-  public void testSetAllow() {}
+  public void testSetState() {}
 
   @Test
-  public void testSetDeny() {}
-
-  @Test
-  public void testGetList() {}
+  public void testGetState() {}
 }

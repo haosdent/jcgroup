@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestNetPrio {
+public class CpuacctTest {
 
   @Before
   public void setUp() {}
@@ -13,11 +13,14 @@ public class TestNetPrio {
   public void tearDown() {}
 
   @Test
-  public void testGetPrioId() {}
+  public void testGetUsage() {}
 
   @Test
-  public void testGetIfPrioMap() {}
+  public void testResetUsage() {}
 
   @Test
-  public void testAddIfPrioMap() {}
+  public void testGetStat() {}
+
+  @Test
+  public void testGetPerUsage() {}
 }

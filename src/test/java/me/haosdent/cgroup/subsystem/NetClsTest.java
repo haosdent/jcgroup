@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestCpuacct {
+public class NetClsTest {
 
   @Before
   public void setUp() {}
@@ -13,14 +13,8 @@ public class TestCpuacct {
   public void tearDown() {}
 
   @Test
-  public void testGetUsage() {}
+  public void testSetClassId() {}
 
   @Test
-  public void testResetUsage() {}
-
-  @Test
-  public void testGetStat() {}
-
-  @Test
-  public void testGetPerUsage() {}
+  public void testGetClassId() {}
 }

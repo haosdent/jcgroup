@@ -1,16 +1,14 @@
 package me.haosdent.cgroup.util;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
-public class TestThreads {
+public class ThreadsTest {
 
-  private static final Logger LOG = LoggerFactory.getLogger(TestThreads.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ThreadsTest.class);
 
   @Test
   public void testGetThreadId() {

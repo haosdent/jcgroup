@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestNetCls {
+public class DevicesTest {
 
   @Before
   public void setUp() {}
@@ -13,8 +13,11 @@ public class TestNetCls {
   public void tearDown() {}
 
   @Test
-  public void testSetClassId() {}
+  public void testSetAllow() {}
 
   @Test
-  public void testGetClassId() {}
+  public void testSetDeny() {}
+
+  @Test
+  public void testGetList() {}
 }

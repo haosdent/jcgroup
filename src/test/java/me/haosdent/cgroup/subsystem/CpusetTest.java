@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestCpuset {
+public class CpusetTest {
 
   @Before
   public void setUp() {}
