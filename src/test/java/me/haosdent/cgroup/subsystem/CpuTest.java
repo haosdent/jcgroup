@@ -1,16 +1,14 @@
 package me.haosdent.cgroup.subsystem;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 public class CpuTest {
 
-  @Before
-  public void setUp() {}
+  @BeforeClass
+  public void setUpClass() {}
 
-  @After
-  public void tearDown() {}
+  @AfterClass
+  public void tearDownClass() {}
 
   @Test
   public void testSetShares() {}
