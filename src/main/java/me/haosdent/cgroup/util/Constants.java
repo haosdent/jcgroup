@@ -2,6 +2,9 @@ package me.haosdent.cgroup.util;
 
 public class Constants {
 
+  public static final String PREFIX_CGROUP_DIR = "/cgroup/%s";
+
+  public static final String SHELL_MKDIR = "mkdir -p %s";
   public static final String SHELL_MOUNT = "mount -t cgroup -o%s %s %s";
   public static final String SHELL_UMOUNT = "umount %s";
 

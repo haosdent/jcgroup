@@ -94,14 +94,20 @@ public class Shell {
   }
 
   public void mount(String name, int subsystems) throws IOException {
+    String path = String.format(PREFIX_CGROUP_DIR, name);
+    mkdir(path);
     StringBuilder flag = getSubsystemsFlag(subsystems);
-    String cmd =
-        String.format(SHELL_MOUNT, flag, flag, name);
+    String cmd = String.format(SHELL_MOUNT, flag, flag, path);
     exec(cmd, true);
   }
 
   public void umount(String name) throws IOException {
     String cmd = String.format(SHELL_UMOUNT, name);
+    exec(cmd, true);
+  }
+
+  public void mkdir(String path) throws IOException {
+    String cmd = String.format(SHELL_MKDIR, path);
     exec(cmd, true);
   }
 
