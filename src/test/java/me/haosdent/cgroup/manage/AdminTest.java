@@ -1,6 +1,6 @@
 package me.haosdent.cgroup.manage;
 
-import me.haosdent.cgroup.util.Constants;
+import static me.haosdent.cgroup.util.Constants.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class AdminTest {
   @Test
   public void testUmount() {
     try {
-      Admin admin = new Admin(Constants.SUBSYS_CPU);
+      Admin admin = new Admin(SUBSYS_CPU);
       admin.umount();
     } catch (IOException e) {
       LOG.error("Create Admin error.", e);
@@ -35,5 +35,14 @@ public class AdminTest {
   }
 
   @Test
-  public void testCreateGroup() {}
+  public void testCreateGroup() {
+    try {
+      Admin admin = new Admin(SUBSYS_CPU);
+      admin.createGroup("one", SUBSYS_CPU);
+      admin.umount();
+    } catch (IOException e) {
+      LOG.error("Create Admin error.", e);
+      assertTrue(false);
+    }
+  }
 }
