@@ -15,11 +15,11 @@ public class CpuTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(CpuTest.class);
 
-  @BeforeClass
+  @Before
   public void setUpClass() {}
 
-  @AfterClass
-  public void tearDownClass() {}
+  @After
+  public void tearDown() {}
 
   @Test
   public void testSetShares() {
@@ -27,6 +27,7 @@ public class CpuTest {
       Admin admin = new Admin(Constants.SUBSYS_CPU);
       Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
       Group two = admin.createGroup("two", Constants.SUBSYS_CPU);
+      admin.umount();
       //TODO
     } catch (IOException e) {
       LOG.error("Create Admin Failed.", e);

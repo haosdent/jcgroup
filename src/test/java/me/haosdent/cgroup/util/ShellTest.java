@@ -16,21 +16,31 @@ public class ShellTest {
   private static final Logger LOG = LoggerFactory.getLogger(ShellTest.class);
 
   @Before
-  public void setUp() {}
+  public void setUp() {
+  }
 
   @After
-  public void tearDown() {}
-
-  @Test
-  public void testExec() throws IOException {
-    Shell shell = new Shell(null);
-    String output = shell.exec("echo 0");
-    assertTrue(output.equals("0\n"));
+  public void tearDown() {
   }
 
   @Test
-  public void testMount() {}
+  public void testExec() {
+    try {
+      Admin admin = new Admin(Constants.SUBSYS_CPU);
+      Shell shell = admin.getShell();
+      String output = shell.exec("echo 0");
+      assertTrue(output.equals("0\n"));
+    } catch (IOException e) {
+      LOG.error("Error", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testUmount() {}
+  public void testMount() {
+  }
+
+  @Test
+  public void testUmount() {
+  }
 }
