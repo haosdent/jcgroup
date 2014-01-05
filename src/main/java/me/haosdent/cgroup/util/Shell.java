@@ -83,7 +83,7 @@ public class Shell {
       String output = IOUtils.toString(process.getInputStream());
       String errorOutput = IOUtils.toString(process.getErrorStream());
       LOG.info("Shell Output:" + output);
-      if (errorOutput.length() != 0) {
+      if (errorOutput.length() != 0 && !errorOutput.contains("[sudo] password for")) {
         LOG.error("Shell Error Output:" + errorOutput);
         throw new IOException(errorOutput);
       }
@@ -102,12 +102,19 @@ public class Shell {
   }
 
   public void umount(String name) throws IOException {
-    String cmd = String.format(SHELL_UMOUNT, name);
+    String path = String.format(PREFIX_CGROUP_DIR, name);
+    String cmd = String.format(SHELL_UMOUNT, path);
     exec(cmd, true);
+    rmdir(path);
   }
 
   public void mkdir(String path) throws IOException {
     String cmd = String.format(SHELL_MKDIR, path);
+    exec(cmd, true);
+  }
+
+  public void rmdir(String path) throws IOException {
+    String cmd = String.format(SHELL_RMDIR, path);
     exec(cmd, true);
   }
 
