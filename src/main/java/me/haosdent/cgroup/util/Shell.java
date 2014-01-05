@@ -124,8 +124,8 @@ public class Shell {
     exec(cmd, true);
   }
 
-  public void cgdelete(String group) throws IOException {
-    String cmd = String.format(SHELL_CG_DELETE, group);
+  public void cgdelete(String group, int subsystems) throws IOException {
+    String cmd = String.format(SHELL_CG_DELETE, getSubsystemsFlag(subsystems), group);
     exec(cmd, true);
   }
 

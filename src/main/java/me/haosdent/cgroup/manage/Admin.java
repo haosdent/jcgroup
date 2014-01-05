@@ -20,6 +20,7 @@ public class Admin {
   public static final String USER_CONF_KEY_PASSWORD = "password";
   private Shell shell;
   private String name;
+  private int subsystems;
   private String password;
   private List<Group> groupList = new LinkedList<Group>();
 
@@ -28,6 +29,7 @@ public class Admin {
   public Admin(String name, String password, int subsystems) throws IOException {
     this.name = name;
     this.password = password;
+    this.subsystems = subsystems;
     this.shell = new Shell(this);
     shell.mount(name, subsystems);
   }

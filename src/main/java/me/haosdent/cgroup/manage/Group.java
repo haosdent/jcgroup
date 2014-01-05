@@ -12,6 +12,7 @@ public class Group {
   private Shell shell;
   private Admin admin;
   private String name;
+  private int subsystems;
 
   private Blkio blkio;
   private Cpu cpu;
@@ -28,12 +29,14 @@ public class Group {
   protected Group(Admin admin, String name, int subsystems) throws IOException {
     this.admin = admin;
     this.shell = admin.getShell();
+    this.name = name;
+    this.subsystems = subsystems;
     shell.cgcreate(name, subsystems);
     admin.getGroupList().add(this);
   }
 
   public void delete() throws IOException {
-    shell.cgdelete(name);
+    shell.cgdelete(name, subsystems);
     List<Group> groupList = admin.getGroupList();
     synchronized (groupList) {
       groupList.remove(this);

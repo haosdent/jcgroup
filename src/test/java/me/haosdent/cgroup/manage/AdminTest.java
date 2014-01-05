@@ -1,6 +1,5 @@
 package me.haosdent.cgroup.manage;
 
-import static me.haosdent.cgroup.util.Constants.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,18 +9,19 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import static org.junit.Assert.*;
+import static me.haosdent.cgroup.util.Constants.*;
 
 public class AdminTest {
 
-  private static final Logger LOG = LoggerFactory
-          .getLogger(AdminTest.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AdminTest.class);
 
   @Before
   public void setUp() {
   }
 
   @After
-  public void tearDown() {}
+  public void tearDown() {
+  }
 
   @Test
   public void testUmount() {
