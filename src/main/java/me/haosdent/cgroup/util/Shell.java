@@ -4,6 +4,8 @@ import static me.haosdent.cgroup.util.Constants.*;
 
 import me.haosdent.cgroup.manage.Admin;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.io.InputStreamReader;
 
 public class Shell {
 
+  private static final Logger LOG = LoggerFactory.getLogger(Shell.class);
   Admin admin;
   String prefix;
 
@@ -73,10 +76,17 @@ public class Shell {
     if (isPrivilege) {
       cmd = prefix + cmd;
     }
-    Process process = Runtime.getRuntime().exec(cmd);
+    LOG.info("Shell cmd:" + cmd);
+    Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", cmd});
     try {
       process.waitFor();
       String output = IOUtils.toString(process.getInputStream());
+      String errorOutput = IOUtils.toString(process.getErrorStream());
+      LOG.info("Shell Output:" + output);
+      if (errorOutput.length() != 0) {
+        LOG.error("Shell Error Output:" + errorOutput);
+        throw new IOException(errorOutput);
+      }
       return output;
     } catch (InterruptedException ie) {
       throw new IOException(ie.toString());
@@ -84,8 +94,9 @@ public class Shell {
   }
 
   public void mount(String name, int subsystems) throws IOException {
+    StringBuilder flag = getSubsystemsFlag(subsystems);
     String cmd =
-        String.format(SHELL_MOUNT, getSubsystemsFlag(subsystems), name);
+        String.format(SHELL_MOUNT, flag, flag, name);
     exec(cmd, true);
   }
 

@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import me.haosdent.cgroup.util.Shell;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -20,6 +22,8 @@ public class Admin {
   private String name;
   private String password;
   private List<Group> groupList = new LinkedList<Group>();
+
+  private static final Logger LOG = LoggerFactory.getLogger(Admin.class);
 
   public Admin(String name, String password, int subsystems) throws IOException {
     this.name = name;
