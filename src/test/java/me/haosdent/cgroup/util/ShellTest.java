@@ -35,12 +35,4 @@ public class ShellTest {
       assertTrue(false);
     }
   }
-
-  @Test
-  public void testMount() {
-  }
-
-  @Test
-  public void testUmount() {
-  }
 }
