@@ -27,8 +27,9 @@ public class CpuTest {
       Admin admin = new Admin(Constants.SUBSYS_CPU);
       Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
       Group two = admin.createGroup("two", Constants.SUBSYS_CPU);
-      admin.umount();
-      //TODO
+      one.getCpu().setShares(100);
+      two.getCpu().setShares(200);
+      //admin.umount();
     } catch (IOException e) {
       LOG.error("Create Admin Failed.", e);
       assertTrue(false);

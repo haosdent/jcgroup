@@ -25,10 +25,10 @@ public class Cpu extends Common {
     public final int throttledTime;
 
     public Stat(String statStr) {
-      //TODO
-      this.nrPeriods = 1;
-      this.nrThrottled = 1;
-      this.throttledTime = 1;
+      String[] splits = statStr.split("\n");
+      this.nrPeriods = Integer.parseInt(splits[0].split(" ")[1]);
+      this.nrThrottled = Integer.parseInt(splits[1].split(" ")[1]);
+      this.throttledTime = Integer.parseInt(splits[2].split(" ")[1]);
     }
   }
 
