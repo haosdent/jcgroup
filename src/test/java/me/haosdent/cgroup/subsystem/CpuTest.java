@@ -28,8 +28,10 @@ public class CpuTest {
       Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
       Group two = admin.createGroup("two", Constants.SUBSYS_CPU);
       one.getCpu().setShares(100);
+      assertEquals(one.getCpu().getShares(), 100);
       two.getCpu().setShares(200);
-      //admin.umount();
+      assertEquals(two.getCpu().getShares(), 200);
+      admin.umount();
     } catch (IOException e) {
       LOG.error("Create Admin Failed.", e);
       assertTrue(false);

@@ -2,10 +2,14 @@ package me.haosdent.cgroup.subsystem;
 
 import me.haosdent.cgroup.manage.Group;
 import me.haosdent.cgroup.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class Cpu extends Common {
+
+  private static final Logger LOG = LoggerFactory.getLogger(Cpu.class);
 
   public static final int SUBSYS = Constants.SUBSYS_CPU;
   public static final String PROP_CPU_CFS_PERIOD_US = "cpu.cfs_period_us";
@@ -34,6 +38,11 @@ public class Cpu extends Common {
 
   public void setShares(int shares) throws IOException {
     shell.cgset(group.getName(), PROP_CPU_SHARES, shares + "");
+  }
+
+  public int getShares() throws IOException {
+    int shares = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_SHARES));
+    return shares;
   }
 
   public void setCfsPeriodTime(long time) throws IOException {

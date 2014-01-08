@@ -144,7 +144,8 @@ public class Shell {
 
   public String cgget(String group, String prop) throws IOException {
     String cmd = String.format(SHELL_CG_GET, prop, group);
-    return exec(cmd);
+    String result = exec(cmd).split("\n")[1].split(" ")[1];
+    return result;
   }
 
   public void cgclear() throws IOException {
