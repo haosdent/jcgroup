@@ -51,5 +51,17 @@ public class CpuTest {
   public void testSetRtRuntimeTime() {}
 
   @Test
-  public void testGetStat() {}
+  public void testGetStat() {
+    try {
+      Admin admin = new Admin(Constants.SUBSYS_CPU);
+      Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
+      Cpu.Stat actual = one.getCpu().getStat();
+      Cpu.Stat expected = new Cpu.Stat("nr_periods 0\nnr_throttled 0\nthrottled_time 0");
+      assertEquals(actual, expected);
+      admin.umount();
+    } catch (IOException e) {
+      LOG.error("Create Admin Failed.", e);
+      assertTrue(false);
+    }
+  }
 }

@@ -34,6 +34,18 @@ public class Cpu extends Common {
       this.nrThrottled = Integer.parseInt(splits[1].split(" ")[1]);
       this.throttledTime = Integer.parseInt(splits[2].split(" ")[1]);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+      Stat excepted = (Stat) obj;
+      boolean result = false;
+      if (this.nrPeriods == excepted.nrPeriods
+              && this.nrThrottled == excepted.nrThrottled
+              && this.throttledTime == excepted.throttledTime) {
+        result = true;
+      }
+      return result;
+    }
   }
 
   public void setShares(int shares) throws IOException {
