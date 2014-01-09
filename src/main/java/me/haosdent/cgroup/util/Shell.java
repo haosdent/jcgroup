@@ -2,7 +2,9 @@ package me.haosdent.cgroup.util;
 
 import static me.haosdent.cgroup.util.Constants.*;
 
+import com.google.common.annotations.VisibleForTesting;
 import me.haosdent.cgroup.manage.Admin;
+import me.haosdent.cgroup.subsystem.Cpu;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,10 @@ public class Shell {
     sb.append(admin.getPassword());
     sb.append("|sudo -S ");
     this.prefix = sb.toString();
+  }
+
+  @VisibleForTesting
+  public Shell() {
   }
 
   private static StringBuilder getSubsystemsFlag(int subsystems) {
@@ -144,7 +150,7 @@ public class Shell {
 
   public String cgget(String group, String prop) throws IOException {
     String cmd = String.format(SHELL_CG_GET, prop, group);
-    String result = exec(cmd).split("\n")[1].split(" ")[1];
+    String result = filterCggetOutput(prop, exec(cmd));
     return result;
   }
 
@@ -159,5 +165,11 @@ public class Shell {
         String.format(SHELL_CG_EXEC, getSubsystemsFlag(subsystems), group,
             command);
     exec(cmd, true);
+  }
+
+  public String filterCggetOutput(String prop, String result) {
+    result = result.replaceAll(" {2,}", "");
+    result = result.substring(result.indexOf(prop) + prop.length() + 2, result.length() - 2);
+    return result;
   }
 }
