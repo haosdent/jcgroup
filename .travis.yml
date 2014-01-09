@@ -1,5 +1,3 @@
 language: java
 install: mvn install -DskipTests
 script: mvn install -DskipTests
-after_success:
-  - mvn clean cobertura:cobertura coveralls:cobertura
