@@ -61,6 +61,11 @@ public class Cpu extends Common {
     shell.cgset(group.getName(), PROP_CPU_CFS_PERIOD_US, time + "");
   }
 
+  public int getCfsPeriodTime() throws IOException {
+    int period = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_CFS_PERIOD_US));
+    return period;
+  }
+
   public void setCfsQuotaTime(long time) throws IOException {
     shell.cgset(group.getName(), PROP_CPU_CFS_QUOTA_US, time + "");
   }
