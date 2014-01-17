@@ -79,6 +79,11 @@ public class Cpu extends Common {
     shell.cgset(group.getName(), PROP_CPU_RT_PERIOD_US, time + "");
   }
 
+  public int getRtPeriodTime() throws IOException {
+    int period = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_RT_PERIOD_US));
+    return period;
+  }
+
   public void setRtRuntimeTime(long time) throws IOException {
     shell.cgset(group.getName(), PROP_CPU_RT_RUNTIME_US, time + "");
   }
