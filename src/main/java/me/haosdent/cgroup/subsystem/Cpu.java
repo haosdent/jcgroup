@@ -88,6 +88,11 @@ public class Cpu extends Common {
     shell.cgset(group.getName(), PROP_CPU_RT_RUNTIME_US, time + "");
   }
 
+  public int getRtRuntimeTime() throws IOException {
+    int runtime = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_RT_RUNTIME_US));
+    return runtime;
+  }
+
   public Stat getStat() throws IOException {
     String result = shell.cgget(group.getName(), PROP_CPU_STAT);
     Stat stat = new Stat(result);
