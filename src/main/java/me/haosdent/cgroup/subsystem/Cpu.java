@@ -61,36 +61,36 @@ public class Cpu extends Common {
     shell.cgset(group.getName(), PROP_CPU_CFS_PERIOD_US, time + "");
   }
 
-  public int getCfsPeriodTime() throws IOException {
-    int period = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_CFS_PERIOD_US));
-    return period;
+  public long getCfsPeriodTime() throws IOException {
+    long time = Long.parseLong(shell.cgget(group.getName(), PROP_CPU_CFS_PERIOD_US));
+    return time;
   }
 
   public void setCfsQuotaTime(long time) throws IOException {
     shell.cgset(group.getName(), PROP_CPU_CFS_QUOTA_US, time + "");
   }
 
-  public int getCfsQuataTime() throws IOException {
-    int quata = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_CFS_QUOTA_US));
-    return quata;
+  public long getCfsQuataTime() throws IOException {
+    Long time = Long.parseLong(shell.cgget(group.getName(), PROP_CPU_CFS_QUOTA_US));
+    return time;
   }
 
   public void setRtPeriodTime(long time) throws IOException {
     shell.cgset(group.getName(), PROP_CPU_RT_PERIOD_US, time + "");
   }
 
-  public int getRtPeriodTime() throws IOException {
-    int period = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_RT_PERIOD_US));
-    return period;
+  public long getRtPeriodTime() throws IOException {
+    long time = Long.parseLong(shell.cgget(group.getName(), PROP_CPU_RT_PERIOD_US));
+    return time;
   }
 
   public void setRtRuntimeTime(long time) throws IOException {
     shell.cgset(group.getName(), PROP_CPU_RT_RUNTIME_US, time + "");
   }
 
-  public int getRtRuntimeTime() throws IOException {
-    int runtime = Integer.parseInt(shell.cgget(group.getName(), PROP_CPU_RT_RUNTIME_US));
-    return runtime;
+  public long getRtRuntimeTime() throws IOException {
+    long time = Long.parseLong(shell.cgget(group.getName(), PROP_CPU_RT_RUNTIME_US));
+    return time;
   }
 
   public Stat getStat() throws IOException {
