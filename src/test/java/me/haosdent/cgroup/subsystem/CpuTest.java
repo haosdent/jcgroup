@@ -21,9 +21,9 @@ public class CpuTest {
   @BeforeClass
   public static void setUpClass() {
     try {
-      Admin admin = new Admin(Constants.SUBSYS_CPU);
-      Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
-      Group two = admin.createGroup("two", Constants.SUBSYS_CPU);
+      admin = new Admin(Constants.SUBSYS_CPU);
+      one = admin.createGroup("one", Constants.SUBSYS_CPU);
+      two = admin.createGroup("two", Constants.SUBSYS_CPU);
     } catch (IOException e) {
       LOG.error("Create cgroup Failed.", e);
       assertTrue(false);

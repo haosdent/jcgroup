@@ -22,9 +22,9 @@ public class CpusetTest {
   @BeforeClass
   public static void setUpClass() {
     try {
-      Admin admin = new Admin(Constants.SUBSYS_CPUSET);
-      Group one = admin.createGroup("one", Constants.SUBSYS_CPUSET);
-      Group two = admin.createGroup("two", Constants.SUBSYS_CPUSET);
+      admin = new Admin(Constants.SUBSYS_CPUSET);
+      one = admin.createGroup("one", Constants.SUBSYS_CPUSET);
+      two = admin.createGroup("two", Constants.SUBSYS_CPUSET);
     } catch (IOException e) {
       LOG.error("Create cgroup Failed.", e);
       assertTrue(false);
@@ -75,33 +75,120 @@ public class CpusetTest {
 
   @Test
   public void testSetMemMigrate() {
-
+    try {
+      one.getCpuset().setMemMigrate(true);
+      boolean flag = one.getCpuset().isMemMigrate();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set memory_migrate failed.", e);
+      assertTrue(false);
+    }
   }
 
   @Test
-  public void testSetCpuExclusive() {}
+  public void testSetCpuExclusive() {
+    try {
+      one.getCpuset().setCpuExclusive(true);
+      boolean flag = one.getCpuset().isCpuExclusive();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set cpu_exclusive failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetMemExclusive() {}
+  public void testSetMemExclusive() {
+    try {
+      one.getCpuset().setMemExclusive(true);
+      boolean flag = one.getCpuset().isMemExclusive();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set mem_exclusive failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetMemHardwall() {}
+  public void testSetMemHardwall() {
+    try {
+      one.getCpuset().setMemHardwall(true);
+      boolean flag = one.getCpuset().isMemHardwall();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set mem_hardwall failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testGetMemPressure() {}
+  public void testGetMemPressure() {
+    try {
+      int pressure = one.getCpuset().getMemPressure();
+      assertTrue(pressure >= 0);
+    } catch (IOException e) {
+      LOG.error("Get memory_pressure failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetMemPressureEnabled() {}
+  public void testSetMemPressureEnabled() {
+    try {
+      one.getCpuset().setMemPressureEnabled(true);
+      boolean flag = one.getCpuset().isMemPressureEnabled();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set memory_pressure_enabled failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetMemSpreadPage() {}
+  public void testSetMemSpreadPage() {
+    try {
+      one.getCpuset().setMemSpreadPage(true);
+      boolean flag = one.getCpuset().isMemSpreadPage();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set memory_spread_page failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetMemSpreadSlab() {}
+  public void testSetMemSpreadSlab() {
+    try {
+      one.getCpuset().setMemSpreadSlab(true);
+      boolean flag = one.getCpuset().isMemSpreadSlab();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set memory_spread_page failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetSchedLoadBlance() {}
+  public void testSetSchedLoadBlance() {
+    try {
+      one.getCpuset().setSchedLoadBlance(true);
+      boolean flag = one.getCpuset().isSchedLoadBlance();
+      assertTrue(flag);
+    } catch (IOException e) {
+      LOG.error("Set sched_load_balance failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetSchedRelaxDomainLevel() {}
+  public void testSetSchedRelaxDomainLevel() {
+    try {
+      one.getCpuset().setSchedRelaxDomainLevel(1);
+      int level = one.getCpuset().getSchedRelaxDomainLevel();
+      assertEquals(level, 1);
+    } catch (IOException e) {
+      LOG.error("Set sched_relax_domain_level failed.", e);
+      assertTrue(false);
+    }
+  }
 }
