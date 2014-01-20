@@ -34,6 +34,13 @@ public class Cpuset extends Common {
     shell.cgset(group.getName(), PROP_CPUSET_CPUS, sb.toString());
   }
 
+  public int[] getCpus() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_CPUS);
+    int[] nums = {};
+    //TODO
+    return nums;
+  }
+
   public void setMems(int[] nums) throws IOException {
     StringBuilder sb = new StringBuilder();
     for (int num : nums) {
@@ -43,14 +50,33 @@ public class Cpuset extends Common {
     shell.cgset(group.getName(), PROP_CPUSET_MEMS, sb.toString());
   }
 
+  public int[] getMems() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMS);
+    int[] nums = {};
+    //TODO
+    return nums;
+  }
+
   public void setMemMigrate(boolean flag) throws IOException {
     int value = flag? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_MIGRATE, value + "");
   }
 
+  public boolean isMemMigrate() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_MIGRATE);
+    boolean flag = Boolean.parseBoolean(output);
+    return flag;
+  }
+
   public void setCpuExclusive(boolean flag) throws IOException {
     int value = flag? 1 : 0;
-    shell.cgset(group.getName(), PROP_CPUSET_MEM_EXCLUSIVE, value + "");
+    shell.cgset(group.getName(), PROP_CPUSET_CPU_EXCLUSIVE, value + "");
+  }
+
+  public boolean isCpuExclusive() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_CPU_EXCLUSIVE);
+    boolean flag = Boolean.parseBoolean(output);
+    return flag;
   }
 
   public void setMemExclusive(boolean flag) throws IOException {
@@ -58,14 +84,26 @@ public class Cpuset extends Common {
     shell.cgset(group.getName(), PROP_CPUSET_MEM_EXCLUSIVE, value + "");
   }
 
+  public boolean isMemExclusive() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEM_EXCLUSIVE);
+    boolean flag = Boolean.parseBoolean(output);
+    return flag;
+  }
+
   public void setMemHardwall(boolean flag) throws IOException {
     int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEM_HARDWALL, value + "");
   }
 
+  public boolean isMemHardwall() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEM_HARDWALL);
+    boolean flag = Boolean.parseBoolean(output);
+    return flag;
+  }
+
   public int getMemPressure() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_PRESSURE);
-    return Integer.parseInt(result);
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_PRESSURE);
+    return Integer.parseInt(output);
   }
 
   public void setMemPressureEnabled(boolean flag) throws IOException {
@@ -73,9 +111,19 @@ public class Cpuset extends Common {
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_PRESSURE_ENABLED, value + "");
   }
 
+  public boolean isMemPressureEnabled() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_PRESSURE_ENABLED);
+    return Boolean.parseBoolean(output);
+  }
+
   public void setMemSpreadPage(boolean flag) throws IOException {
     int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_SPREAD_PAGE, value + "");
+  }
+
+  public boolean isMemSpreadPage() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_SPREAD_PAGE);
+    return Boolean.parseBoolean(output);
   }
 
   public void setMemSpreadSlab(boolean flag) throws IOException {
@@ -83,13 +131,27 @@ public class Cpuset extends Common {
     shell.cgset(group.getName(), PROP_CPUSET_MEMORY_SPREAD_SLAB, value + "");
   }
 
+  public boolean isMemSpreadSlab() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_SPREAD_SLAB);
+    return Boolean.parseBoolean(output);
+  }
+
   public void setSchedLoadBlance(boolean flag) throws IOException {
     int value = flag ? 1 : 0;
     shell.cgset(group.getName(), PROP_CPUSET_SCHED_LOAD_BALANCE, value + "");
   }
 
+  public boolean isSchedLoadBlance() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_SCHED_LOAD_BALANCE);
+    return Boolean.parseBoolean(output);
+  }
+
   public void setSchedRelaxDomainLevel(int value) throws IOException {
-    shell.cgset(group.getName(), PROP_CPUSET_SCHED_RELAX_DOMAIN_LEVEL, value + ""
-    );
+    shell.cgset(group.getName(), PROP_CPUSET_SCHED_RELAX_DOMAIN_LEVEL, value + "");
+  }
+
+  public int getSchedRelaxDomainLevel() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_CPUSET_SCHED_RELAX_DOMAIN_LEVEL);
+    return Integer.parseInt(output);
   }
 }

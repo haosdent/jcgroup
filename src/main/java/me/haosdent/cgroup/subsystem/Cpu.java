@@ -94,8 +94,8 @@ public class Cpu extends Common {
   }
 
   public Stat getStat() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_CPU_STAT);
-    Stat stat = new Stat(result);
+    String output = shell.cgget(group.getName(), PROP_CPU_STAT);
+    Stat stat = new Stat(output);
     return stat;
   }
 }

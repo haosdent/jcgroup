@@ -1,10 +1,45 @@
 package me.haosdent.cgroup.subsystem;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import me.haosdent.cgroup.manage.Admin;
+import me.haosdent.cgroup.manage.Group;
+import me.haosdent.cgroup.util.Constants;
+import org.junit.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
+import static org.junit.Assert.*;
+
 
 public class CpusetTest {
+
+  private static final Logger LOG = LoggerFactory.getLogger(CpuacctTest.class);
+  private static Admin admin;
+  private static Group one;
+  private static Group two;
+
+  @BeforeClass
+  public static void setUpClass() {
+    try {
+      Admin admin = new Admin(Constants.SUBSYS_CPUSET);
+      Group one = admin.createGroup("one", Constants.SUBSYS_CPUSET);
+      Group two = admin.createGroup("two", Constants.SUBSYS_CPUSET);
+    } catch (IOException e) {
+      LOG.error("Create cgroup Failed.", e);
+      assertTrue(false);
+    }
+  }
+
+  @AfterClass
+  public static void tearDownClass() {
+    try {
+      admin.umount();
+    } catch (IOException e) {
+      LOG.error("Umount cgroup failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Before
   public void setUp() {}
@@ -13,13 +48,35 @@ public class CpusetTest {
   public void tearDown() {}
 
   @Test
-  public void testSetCpus() {}
+  public void testSetCpus() {
+    try {
+      int[] actual = {0,1};
+      one.getCpuset().setCpus(actual);
+      int[] excepted = one.getCpuset().getCpus();
+      assertArrayEquals(actual, excepted);
+    } catch (IOException e) {
+      LOG.error("Set cpus failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetMems() {}
+  public void testSetMems() {
+    try {
+      int[] actual = {0,1};
+      one.getCpuset().setMems(actual);
+      int[] excepted = one.getCpuset().getMems();
+      assertArrayEquals(actual, excepted);
+    } catch (IOException e) {
+      LOG.error("Set mems failed.", e);
+      assertTrue(false);
+    }
+  }
 
   @Test
-  public void testSetMemMigrate() {}
+  public void testSetMemMigrate() {
+
+  }
 
   @Test
   public void testSetCpuExclusive() {}

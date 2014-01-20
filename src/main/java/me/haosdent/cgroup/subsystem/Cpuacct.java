@@ -39,8 +39,8 @@ public class Cpuacct extends Common {
   }
 
   public long getUsage() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_CPUACCT_USAGE);
-    return Long.parseLong(result);
+    String output = shell.cgget(group.getName(), PROP_CPUACCT_USAGE);
+    return Long.parseLong(output);
   }
 
   public void resetUsage() throws IOException {
@@ -48,16 +48,16 @@ public class Cpuacct extends Common {
   }
 
   public Stat getStat() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_CPUACCT_STAT);
-    Stat stat = new Stat(result);
+    String output = shell.cgget(group.getName(), PROP_CPUACCT_STAT);
+    Stat stat = new Stat(output);
     return stat;
   }
 
   public long[] getPerUsage() throws IOException {
-    String[] results = shell.cgget(group.getName(), PROP_CPUACCT_USAGE_PERCPU).split(" ");
-    long[] usages = new long[results.length];
-    for (int i = 0, l = results.length; i < l; i++) {
-      usages[i] = Long.parseLong(results[i]);
+    String[] outputs = shell.cgget(group.getName(), PROP_CPUACCT_USAGE_PERCPU).split(" ");
+    long[] usages = new long[outputs.length];
+    for (int i = 0, l = outputs.length; i < l; i++) {
+      usages[i] = Long.parseLong(outputs[i]);
     }
     return usages;
   }
