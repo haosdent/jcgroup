@@ -70,7 +70,7 @@ public class Cpu extends Common {
     shell.cgset(group.getName(), PROP_CPU_CFS_QUOTA_US, time + "");
   }
 
-  public long getCfsQuataTime() throws IOException {
+  public long getCfsQuotaTime() throws IOException {
     Long time = Long.parseLong(shell.cgget(group.getName(), PROP_CPU_CFS_QUOTA_US));
     return time;
   }
