@@ -14,9 +14,33 @@ import static org.junit.Assert.*;
 public class CpuTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(CpuTest.class);
+  private static Admin admin;
+  private static Group one;
+  private static Group two;
+
+  @BeforeClass
+  public static void setUpClass() {
+    try {
+      Admin admin = new Admin(Constants.SUBSYS_CPU);
+      Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
+      Group two = admin.createGroup("two", Constants.SUBSYS_CPU);
+    } catch (IOException e) {
+      LOG.error("Create cgroup Failed.", e);
+      assertTrue(false);
+    }
+  }
+
+  @AfterClass
+  public static void tearDownClass() {
+    try {
+      admin.umount();
+    } catch (IOException e) {
+      LOG.error("Umount cgroup failed.", e);
+    }
+  }
 
   @Before
-  public void setUpClass() {}
+  public void setUp() {}
 
   @After
   public void tearDown() {}
@@ -24,22 +48,19 @@ public class CpuTest {
   @Test
   public void testSetShares() {
     try {
-      Admin admin = new Admin(Constants.SUBSYS_CPU);
-      Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
-      Group two = admin.createGroup("two", Constants.SUBSYS_CPU);
       one.getCpu().setShares(100);
       assertEquals(one.getCpu().getShares(), 100);
       two.getCpu().setShares(200);
       assertEquals(two.getCpu().getShares(), 200);
-      admin.umount();
     } catch (IOException e) {
-      LOG.error("Create Admin Failed.", e);
+      LOG.error("Set shares failed.", e);
       assertTrue(false);
     }
   }
 
   @Test
-  public void testSetCfsPeriodTime() {}
+  public void testSetCfsPeriodTime() {
+  }
 
   @Test
   public void testSetCfsQuotaTime() {}
@@ -53,14 +74,11 @@ public class CpuTest {
   @Test
   public void testGetStat() {
     try {
-      Admin admin = new Admin(Constants.SUBSYS_CPU);
-      Group one = admin.createGroup("one", Constants.SUBSYS_CPU);
       Cpu.Stat actual = one.getCpu().getStat();
       Cpu.Stat expected = new Cpu.Stat("nr_periods 0\nnr_throttled 0\nthrottled_time 0");
       assertEquals(actual, expected);
-      admin.umount();
     } catch (IOException e) {
-      LOG.error("Create Admin Failed.", e);
+      LOG.error("Get stat failed.", e);
       assertTrue(false);
     }
   }
