@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +17,7 @@ public class CpusetTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(CpuacctTest.class);
   private static Admin admin;
+  private static Group root;
   private static Group one;
   private static Group two;
 
@@ -23,6 +25,7 @@ public class CpusetTest {
   public static void setUpClass() {
     try {
       admin = new Admin(Constants.SUBSYS_CPUSET);
+      root = admin.getRootGroup();
       one = admin.createGroup("one", Constants.SUBSYS_CPUSET);
       two = admin.createGroup("two", Constants.SUBSYS_CPUSET);
     } catch (IOException e) {
@@ -63,7 +66,7 @@ public class CpusetTest {
   @Test
   public void testSetMems() {
     try {
-      int[] actual = {0,1};
+      int[] actual = {0};
       one.getCpuset().setMems(actual);
       int[] excepted = one.getCpuset().getMems();
       assertArrayEquals(actual, excepted);
@@ -135,8 +138,9 @@ public class CpusetTest {
   @Test
   public void testSetMemPressureEnabled() {
     try {
-      one.getCpuset().setMemPressureEnabled(true);
-      boolean flag = one.getCpuset().isMemPressureEnabled();
+      root.getCpuset().setMemPressureEnabled(true);
+      boolean flag = root.getCpuset().isMemPressureEnabled();
+      LOG.error(flag + "");
       assertTrue(flag);
     } catch (IOException e) {
       LOG.error("Set memory_pressure_enabled failed.", e);
@@ -183,12 +187,20 @@ public class CpusetTest {
   @Test
   public void testSetSchedRelaxDomainLevel() {
     try {
-      one.getCpuset().setSchedRelaxDomainLevel(1);
+      one.getCpuset().setSchedRelaxDomainLevel(0);
       int level = one.getCpuset().getSchedRelaxDomainLevel();
-      assertEquals(level, 1);
+      assertEquals(level, 0);
     } catch (IOException e) {
       LOG.error("Set sched_relax_domain_level failed.", e);
       assertTrue(false);
     }
+  }
+
+  @Test
+  public void testParseNums() {
+    String output = "0-1,3";
+    int[] actual = Cpuset.parseNums(output);
+    int[] excepted = {0, 1, 3};
+    assertArrayEquals(actual, excepted);
   }
 }

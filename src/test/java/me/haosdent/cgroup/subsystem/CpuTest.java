@@ -63,8 +63,6 @@ public class CpuTest {
     try {
       one.getCpu().setCfsPeriodTime(1000);
       assertEquals(one.getCpu().getCfsPeriodTime(), 1000);
-      two.getCpu().setCfsPeriodTime(2000);
-      assertEquals(two.getCpu().getCfsPeriodTime(), 2000);
     } catch (IOException e) {
       LOG.error("Set cfs_period_us failed.", e);
       assertTrue(false);
@@ -76,8 +74,6 @@ public class CpuTest {
     try {
       one.getCpu().setCfsQuotaTime(1000);
       assertEquals(one.getCpu().getCfsQuotaTime(), 1000);
-      two.getCpu().setCfsQuotaTime(2000);
-      assertEquals(two.getCpu().getCfsQuotaTime(), 2000);
     } catch (IOException e) {
       LOG.error("Set cfs_quota_us failed.", e);
       assertTrue(false);
@@ -87,10 +83,8 @@ public class CpuTest {
   @Test
   public void testSetRtPeriodTime() {
     try {
-      one.getCpu().setRtPeriodTime(1000);
-      assertEquals(one.getCpu().getRtPeriodTime(), 1000);
-      two.getCpu().setRtPeriodTime(2000);
-      assertEquals(two.getCpu().getRtPeriodTime(), 2000);
+      one.getCpu().setRtPeriodTime(100000);
+      assertEquals(one.getCpu().getRtPeriodTime(), 100000);
     } catch (IOException e) {
       LOG.error("Set rt_period_us failed.", e);
       assertTrue(false);
@@ -102,8 +96,6 @@ public class CpuTest {
     try {
       one.getCpu().setRtRuntimeTime(1000);
       assertEquals(one.getCpu().getRtRuntimeTime(), 1000);
-      two.getCpu().setRtRuntimeTime(2000);
-      assertEquals(two.getCpu().getRtRuntimeTime(), 2000);
     } catch (IOException e) {
       LOG.error("Set rt_runtime_us failed.", e);
       assertTrue(false);

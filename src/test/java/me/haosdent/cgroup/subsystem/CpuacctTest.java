@@ -49,7 +49,7 @@ public class CpuacctTest {
   public void testGetUsage() {
     try {
       long usage = one.getCpuacct().getUsage();
-      assertTrue(usage >= 0);
+      assertEquals(usage, 0);
     } catch (IOException e) {
       LOG.error("Get usage failed.", e);
       assertTrue(false);
@@ -72,8 +72,8 @@ public class CpuacctTest {
   public void testGetStat() {
     try {
       Cpuacct.Stat stat = one.getCpuacct().getStat();
-      assertTrue(stat.userTime >= 0);
-      assertTrue(stat.systemTime >= 0);
+      assertEquals(stat.userTime, 0);
+      assertEquals(stat.systemTime, 0);
     } catch (IOException e) {
       LOG.error("Get stat failed.", e);
       assertTrue(false);
@@ -86,7 +86,7 @@ public class CpuacctTest {
       long[] usages = one.getCpuacct().getPerUsage();
       assertTrue(usages.length > 0);
       for (long usage: usages) {
-        assertTrue(usage > 0);
+        assertEquals(usage, 0);
       }
     } catch (IOException e) {
       LOG.error("Get usage_percpu failed.", e);

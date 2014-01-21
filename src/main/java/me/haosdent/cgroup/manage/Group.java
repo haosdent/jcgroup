@@ -13,6 +13,7 @@ public class Group {
   private Admin admin;
   private String name;
   private int subsystems;
+  private boolean isRoot;
 
   private Blkio blkio;
   private Cpu cpu;
@@ -27,12 +28,19 @@ public class Group {
   private List<Common> subSystemList = new LinkedList<Common>();
 
   protected Group(Admin admin, String name, int subsystems) throws IOException {
+    this(admin, name, subsystems, false);
+  }
+
+  protected Group(Admin admin, String name, int subsystems, boolean isRoot) throws IOException {
     this.admin = admin;
     this.shell = admin.getShell();
     this.name = name;
     this.subsystems = subsystems;
-    shell.cgcreate(name, subsystems);
-    admin.getGroupList().add(this);
+    this.isRoot = isRoot;
+    if (!isRoot) {
+      shell.cgcreate(name, subsystems);
+      admin.getGroupList().add(this);
+    }
   }
 
   public void delete() throws IOException {
@@ -57,6 +65,10 @@ public class Group {
 
   public List<Common> getSubSystemList() {
     return subSystemList;
+  }
+
+  public boolean isRoot() {
+    return isRoot;
   }
 
   public Blkio getBlkio() {

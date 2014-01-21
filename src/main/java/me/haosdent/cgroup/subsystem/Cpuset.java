@@ -4,6 +4,7 @@ import me.haosdent.cgroup.manage.Group;
 import me.haosdent.cgroup.util.Constants;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class Cpuset extends Common {
 
@@ -31,14 +32,13 @@ public class Cpuset extends Common {
       sb.append(num);
       sb.append(',');
     }
+    sb.deleteCharAt(sb.length() - 1);
     shell.cgset(group.getName(), PROP_CPUSET_CPUS, sb.toString());
   }
 
   public int[] getCpus() throws IOException {
     String output = shell.cgget(group.getName(), PROP_CPUSET_CPUS);
-    int[] nums = {};
-    //TODO
-    return nums;
+    return parseNums(output);
   }
 
   public void setMems(int[] nums) throws IOException {
@@ -47,14 +47,13 @@ public class Cpuset extends Common {
       sb.append(num);
       sb.append(',');
     }
+    sb.deleteCharAt(sb.length() - 1);
     shell.cgset(group.getName(), PROP_CPUSET_MEMS, sb.toString());
   }
 
   public int[] getMems() throws IOException {
     String output = shell.cgget(group.getName(), PROP_CPUSET_MEMS);
-    int[] nums = {};
-    //TODO
-    return nums;
+    return parseNums(output);
   }
 
   public void setMemMigrate(boolean flag) throws IOException {
@@ -63,9 +62,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isMemMigrate() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_MIGRATE);
-    boolean flag = Boolean.parseBoolean(output);
-    return flag;
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_MEMORY_MIGRATE));
+    return output > 0;
   }
 
   public void setCpuExclusive(boolean flag) throws IOException {
@@ -74,9 +72,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isCpuExclusive() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_CPU_EXCLUSIVE);
-    boolean flag = Boolean.parseBoolean(output);
-    return flag;
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_CPU_EXCLUSIVE));
+    return output > 0;
   }
 
   public void setMemExclusive(boolean flag) throws IOException {
@@ -85,9 +82,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isMemExclusive() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_MEM_EXCLUSIVE);
-    boolean flag = Boolean.parseBoolean(output);
-    return flag;
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_MEM_EXCLUSIVE));
+    return output > 0;
   }
 
   public void setMemHardwall(boolean flag) throws IOException {
@@ -96,9 +92,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isMemHardwall() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_MEM_HARDWALL);
-    boolean flag = Boolean.parseBoolean(output);
-    return flag;
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_MEM_HARDWALL));
+    return output > 0;
   }
 
   public int getMemPressure() throws IOException {
@@ -112,8 +107,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isMemPressureEnabled() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_PRESSURE_ENABLED);
-    return Boolean.parseBoolean(output);
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_MEMORY_PRESSURE_ENABLED));
+    return output > 0;
   }
 
   public void setMemSpreadPage(boolean flag) throws IOException {
@@ -122,8 +117,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isMemSpreadPage() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_SPREAD_PAGE);
-    return Boolean.parseBoolean(output);
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_MEMORY_SPREAD_PAGE));
+    return output > 0;
   }
 
   public void setMemSpreadSlab(boolean flag) throws IOException {
@@ -132,8 +127,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isMemSpreadSlab() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_MEMORY_SPREAD_SLAB);
-    return Boolean.parseBoolean(output);
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_MEMORY_SPREAD_SLAB));
+    return output > 0;
   }
 
   public void setSchedLoadBlance(boolean flag) throws IOException {
@@ -142,8 +137,8 @@ public class Cpuset extends Common {
   }
 
   public boolean isSchedLoadBlance() throws IOException {
-    String output = shell.cgget(group.getName(), PROP_CPUSET_SCHED_LOAD_BALANCE);
-    return Boolean.parseBoolean(output);
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_CPUSET_SCHED_LOAD_BALANCE));
+    return output > 0;
   }
 
   public void setSchedRelaxDomainLevel(int value) throws IOException {
@@ -153,5 +148,50 @@ public class Cpuset extends Common {
   public int getSchedRelaxDomainLevel() throws IOException {
     String output = shell.cgget(group.getName(), PROP_CPUSET_SCHED_RELAX_DOMAIN_LEVEL);
     return Integer.parseInt(output);
+  }
+
+  public static int[] parseNums(String outputStr) {
+    char[] output = outputStr.toCharArray();
+    LinkedList<Integer> numList = new LinkedList<Integer>();
+    int value = 0;
+    int start = 0;
+    boolean isHyphen = false;
+    for (char ch : output) {
+      if (ch == ',') {
+        if (isHyphen) {
+          for (; start <= value; start++) {
+            numList.add(start);
+          }
+          isHyphen = false;
+        } else {
+          numList.add(value);
+        }
+        value = 0;
+      } else if (ch == '-') {
+        isHyphen = true;
+        start = value;
+        value = 0;
+      } else {
+        value = value * 10 + (ch - '0');
+      }
+    }
+    if (output[output.length - 1] != ',') {
+      if (isHyphen) {
+        for (; start <= value; start++) {
+          numList.add(start);
+        }
+      } else {
+        numList.add(value);
+      }
+    }
+
+    int[] nums = new int[numList.size()];
+    int index = 0;
+    for (int num : numList) {
+      nums[index] = num;
+      index++;
+    }
+
+    return nums;
   }
 }
