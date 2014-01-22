@@ -42,20 +42,46 @@ public class Blkio extends Common {
     shell.cgset(group.getName(), prop, sb.toString());
   }
 
+  private int[] getThrottle(String prop) throws IOException {
+    String output = shell.cgget(group.getName(), prop);
+    String[] splits = output.split("[: ]");
+    int major = Integer.parseInt(splits[0]);
+    int minor = Integer.parseInt(splits[1]);
+    int speed = Integer.parseInt(splits[2]);
+
+    return new int[]{major, minor, speed};
+  }
+
   public void setReadBpsThrottle(int major, int minor, int speed) throws IOException {
     setThrottle(PROP_BLKIO_THROTTLE_READ_BPS_DEVICE, major, minor, speed);
+  }
+
+  public int[] getReadBpsThrottle() throws IOException {
+    return getThrottle(PROP_BLKIO_THROTTLE_READ_BPS_DEVICE);
   }
 
   public void setWriteBpsThrottle(int major, int minor, int speed) throws IOException {
     setThrottle(PROP_BLKIO_THROTTLE_WRITE_BPS_DEVICE, major, minor, speed);
   }
 
+  public int[] getWriteBpsThrottle() throws IOException {
+    return getThrottle(PROP_BLKIO_THROTTLE_WRITE_BPS_DEVICE);
+  }
+
   public void setReadIopsThrottle(int major, int minor, int speed) throws IOException {
     setThrottle(PROP_BLKIO_THROTTLE_READ_IOPS_DEVICE, major, minor, speed);
   }
 
+  public int[] getReadIopsThrottle() throws IOException {
+    return getThrottle(PROP_BLKIO_THROTTLE_READ_IOPS_DEVICE);
+  }
+
   public void setWriteIopsThrottle(int major, int minor, int speed) throws IOException {
     setThrottle(PROP_BLKIO_THROTTLE_WRITE_IOPS_DEVICE, major, minor, speed);
+  }
+
+  public int[] getWriteIopsThrottle() throws IOException {
+    return getThrottle(PROP_BLKIO_THROTTLE_WRITE_IOPS_DEVICE);
   }
 
   public void resetStats(int value) throws IOException {

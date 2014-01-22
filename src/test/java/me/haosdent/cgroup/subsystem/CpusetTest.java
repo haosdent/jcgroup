@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class CpusetTest {
 
-  private static final Logger LOG = LoggerFactory.getLogger(CpuacctTest.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CpusetTest.class);
   private static Admin admin;
   private static Group root;
   private static Group one;
