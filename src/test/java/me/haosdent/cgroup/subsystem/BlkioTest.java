@@ -103,7 +103,13 @@ public class BlkioTest {
   public void testResetStats() {}
 
   @Test
-  public void testGetIoTime() {}
+  public void testGetIoTime() {
+    try {
+      Blkio.Record[] records = one.getBlkio().getIoTime();
+    } catch (IOException e) {
+      LOG.error("");
+    }
+  }
 
   @Test
   public void testGetSectors() {}

@@ -68,6 +68,8 @@ public class Blkio extends Common {
     }
 
     public static Record[] parseRecordList(String output) {
+      output = output.substring(0, output.indexOf("Total"));
+
       String[] splits = output.split("/n");
       Record[] records = new Record[splits.length];
       for (int i = 0, l = splits.length; i < l; i++) {
@@ -146,14 +148,14 @@ public class Blkio extends Common {
     shell.cgset(group.getName(), PROP_BLKIO_RESET_STATS, value + "");
   }
 
-  public Record getIoTime() throws IOException {
+  public Record[] getIoTime() throws IOException {
     String output = shell.cgget(group.getName(), PROP_BLKIO_TIME);
-    return new Record(output);
+    return Record.parseRecordList(output);
   }
 
-  public Record getSectors() throws IOException {
+  public Record[] getSectors() throws IOException {
     String output = shell.cgget(group.getName(), PROP_BLKIO_SECTORS);
-    return new Record(output);
+    return Record.parseRecordList(output);
   }
 
   public int getAvgQueueSize() throws IOException {
