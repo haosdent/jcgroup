@@ -32,6 +32,10 @@ public class Devices extends Common {
     super(group);
   }
 
+  public static class Record {
+
+  }
+
   public static StringBuilder getTypesFlag(int types) {
     StringBuilder sb = new StringBuilder();
     if ((types & TYPE_ALL) != 0) {
