@@ -12,6 +12,9 @@ public class Blkio extends Common {
   public static final String PROP_BLKIO_THROTTLE_WRITE_BPS_DEVICE = "blkio.throttle.write_bps_device";
   public static final String PROP_BLKIO_THROTTLE_READ_IOPS_DEVICE = "blkio.throttle.read_iops_device";
   public static final String PROP_BLKIO_THROTTLE_WRITE_IOPS_DEVICE = "blkio.throttle.write_iops_device";
+  public static final String PROP_BLKIO_THROTTLE_IO_SERIVICED = "blkio.throttle.io_serviced";
+  public static final String PROP_BLKIO_THROTTLE_IO_SERIVICE_BYTES = "blkio.throttle.io_service_bytes";
+  public static final String PROP_BLKIO_THROTTLE_IO_QUEUED = "blkio.throttle.io_queued";
 
   public static final String PROP_BLKIO_RESET_STATS = "blkio.reset_stats";
   public static final String PROP_BLKIO_TIME = "blkio.time";
@@ -37,9 +40,9 @@ public class Blkio extends Common {
     shell.cgset(group.getName(), prop, record.toString());
   }
 
-  private Record getThrottle(String prop) throws IOException {
+  private Record[] getThrottle(String prop) throws IOException {
     String output = shell.cgget(group.getName(), prop);
-    return new Record(output);
+    return Record.parseRecordList(output);
   }
 
   public static class Record {
@@ -116,7 +119,7 @@ public class Blkio extends Common {
     setThrottle(PROP_BLKIO_THROTTLE_READ_BPS_DEVICE, major, minor, speed);
   }
 
-  public Record getReadBpsThrottle() throws IOException {
+  public Record[] getReadBpsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_READ_BPS_DEVICE);
   }
 
@@ -124,7 +127,7 @@ public class Blkio extends Common {
     setThrottle(PROP_BLKIO_THROTTLE_WRITE_BPS_DEVICE, major, minor, speed);
   }
 
-  public Record getWriteBpsThrottle() throws IOException {
+  public Record[] getWriteBpsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_WRITE_BPS_DEVICE);
   }
 
@@ -132,7 +135,7 @@ public class Blkio extends Common {
     setThrottle(PROP_BLKIO_THROTTLE_READ_IOPS_DEVICE, major, minor, speed);
   }
 
-  public Record getReadIopsThrottle() throws IOException {
+  public Record[] getReadIopsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_READ_IOPS_DEVICE);
   }
 
@@ -140,8 +143,20 @@ public class Blkio extends Common {
     setThrottle(PROP_BLKIO_THROTTLE_WRITE_IOPS_DEVICE, major, minor, speed);
   }
 
-  public Record getWriteIopsThrottle() throws IOException {
+  public Record[] getWriteIopsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_WRITE_IOPS_DEVICE);
+  }
+
+  public Record[] getIoQueueCountThrottle() throws IOException {
+    return getThrottle(PROP_BLKIO_THROTTLE_IO_QUEUED);
+  }
+
+  public Record[] getIoServiceCountThrottle() throws IOException {
+    return getThrottle(PROP_BLKIO_THROTTLE_IO_SERIVICED);
+  }
+
+  public Record[] getIoServiceBytesThrottle() throws IOException {
+    return getThrottle(PROP_BLKIO_THROTTLE_IO_SERIVICE_BYTES);
   }
 
   public void resetStats(int value) throws IOException {
