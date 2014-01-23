@@ -33,30 +33,88 @@ public class Blkio extends Common {
   }
 
   private void setThrottle(String prop, int major, int minor, int speed) throws IOException {
-    StringBuilder sb = new StringBuilder();
-    sb.append(major);
-    sb.append(':');
-    sb.append(minor);
-    sb.append(' ');
-    sb.append(speed);
-    shell.cgset(group.getName(), prop, sb.toString());
+    Record record = new Record(major, minor, null, speed);
+    shell.cgset(group.getName(), prop, record.toString());
   }
 
-  private int[] getThrottle(String prop) throws IOException {
+  private Record getThrottle(String prop) throws IOException {
     String output = shell.cgget(group.getName(), prop);
-    String[] splits = output.split("[: ]");
-    int major = Integer.parseInt(splits[0]);
-    int minor = Integer.parseInt(splits[1]);
-    int speed = Integer.parseInt(splits[2]);
+    return new Record(output);
+  }
 
-    return new int[]{major, minor, speed};
+  public static class Record {
+    int major;
+    int minor;
+    String operation;
+    long value;
+
+    public Record(int major, int minor, String operation, long value) {
+      this.major = major;
+      this.minor = minor;
+      this.operation = operation;
+      this.value = value;
+    }
+
+    public Record(String output) {
+      String[] splits = output.split("[: ]");
+      major = Integer.parseInt(splits[0]);
+      minor = Integer.parseInt(splits[1]);
+      if (splits.length > 3) {
+        operation = splits[2];
+        value = Long.parseLong(splits[3]);
+      } else {
+        value = Long.parseLong(splits[2]);
+      }
+    }
+
+    public static Record[] parseRecordList(String output) {
+      String[] splits = output.split("/n");
+      Record[] records = new Record[splits.length];
+      for (int i = 0, l = splits.length; i < l; i++) {
+        records[i] = new Record(splits[i]);
+      }
+
+      return records;
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append(major);
+      sb.append(':');
+      sb.append(minor);
+      if (operation != null) {
+        sb.append(' ');
+        sb.append(operation);
+      }
+      sb.append(' ');
+      sb.append(value);
+
+      return  sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      Record excepted = (Record) o;
+      boolean result = false;
+      if (major == excepted.major
+              && minor == excepted.minor
+              && value == excepted.value) {
+        if ((operation == null && excepted.operation == null)
+                || (operation != null && excepted.operation != null && operation.equals(excepted.operation))) {
+          result = true;
+        }
+      }
+
+      return result;
+    }
   }
 
   public void setReadBpsThrottle(int major, int minor, int speed) throws IOException {
     setThrottle(PROP_BLKIO_THROTTLE_READ_BPS_DEVICE, major, minor, speed);
   }
 
-  public int[] getReadBpsThrottle() throws IOException {
+  public Record getReadBpsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_READ_BPS_DEVICE);
   }
 
@@ -64,7 +122,7 @@ public class Blkio extends Common {
     setThrottle(PROP_BLKIO_THROTTLE_WRITE_BPS_DEVICE, major, minor, speed);
   }
 
-  public int[] getWriteBpsThrottle() throws IOException {
+  public Record getWriteBpsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_WRITE_BPS_DEVICE);
   }
 
@@ -72,7 +130,7 @@ public class Blkio extends Common {
     setThrottle(PROP_BLKIO_THROTTLE_READ_IOPS_DEVICE, major, minor, speed);
   }
 
-  public int[] getReadIopsThrottle() throws IOException {
+  public Record getReadIopsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_READ_IOPS_DEVICE);
   }
 
@@ -80,7 +138,7 @@ public class Blkio extends Common {
     setThrottle(PROP_BLKIO_THROTTLE_WRITE_IOPS_DEVICE, major, minor, speed);
   }
 
-  public int[] getWriteIopsThrottle() throws IOException {
+  public Record getWriteIopsThrottle() throws IOException {
     return getThrottle(PROP_BLKIO_THROTTLE_WRITE_IOPS_DEVICE);
   }
 
@@ -88,68 +146,68 @@ public class Blkio extends Common {
     shell.cgset(group.getName(), PROP_BLKIO_RESET_STATS, value + "");
   }
 
-  public long getIoTime() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_TIME);
-    return Long.parseLong(result);
+  public Record getIoTime() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_TIME);
+    return new Record(output);
   }
 
-  public long getSectors() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_SECTORS);
-    return Long.parseLong(result);
+  public Record getSectors() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_SECTORS);
+    return new Record(output);
   }
 
   public int getAvgQueueSize() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_AVG_QUEUE_SIZE);
-    return Integer.parseInt(result);
+    String output = shell.cgget(group.getName(), PROP_BLKIO_AVG_QUEUE_SIZE);
+    return Integer.parseInt(output);
   }
 
   public long getGroupWaitTime() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_GROUP_WAIT_TIME);
-    return Long.parseLong(result);
+    String output = shell.cgget(group.getName(), PROP_BLKIO_GROUP_WAIT_TIME);
+    return Long.parseLong(output);
   }
 
   public long getEmptyTime() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_EMPTY_TIME);
-    return Long.parseLong(result);
+    String output = shell.cgget(group.getName(), PROP_BLKIO_EMPTY_TIME);
+    return Long.parseLong(output);
   }
 
   public long getIdleTime() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_IDLE_TIME);
-    return Long.parseLong(result);
+    String output = shell.cgget(group.getName(), PROP_BLKIO_IDLE_TIME);
+    return Long.parseLong(output);
   }
 
-  public int getDequeueCount() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_DEQUEUE);
-    return Integer.parseInt(result);
+  public Record getDequeueCount() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_DEQUEUE);
+    return new Record(output);
   }
 
-  public int getIoServiceCount() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICED);
-    return Integer.parseInt(result);
+  public Record[] getIoServiceCount() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICED);
+    return Record.parseRecordList(output);
   }
 
-  public int getIoServiceBytes() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICE_BYTES);
-    return Integer.parseInt(result);
+  public Record[] getIoServiceBytes() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICE_BYTES);
+    return Record.parseRecordList(output);
   }
 
-  public long getIoServiceTime() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICE_TIME);
-    return Long.parseLong(result);
+  public Record[] getIoServiceTime() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_IO_SERIVICE_TIME);
+    return Record.parseRecordList(output);
   }
 
-  public long getIoWaitTime() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_WAIT_TIME);
-    return Long.parseLong(result);
+  public Record[] getIoWaitTime() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_IO_WAIT_TIME);
+    return Record.parseRecordList(output);
   }
 
-  public int getIoMergeCount() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_MERGED);
-    return Integer.parseInt(result);
+  public Record[] getIoMergeCount() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_IO_MERGED);
+    return Record.parseRecordList(output);
   }
 
-  public int getIoQueueCount() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_BLKIO_IO_QUEUED);
-    return Integer.parseInt(result);
+  public Record[] getIoQueueCount() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_BLKIO_IO_QUEUED);
+    return Record.parseRecordList(output);
   }
 }

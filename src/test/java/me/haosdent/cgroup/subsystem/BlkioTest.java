@@ -50,10 +50,10 @@ public class BlkioTest {
   @Test
   public void testSetReadBpsThrottle() {
     try {
-      int[] actual = {8, 0, 200};
-      one.getBlkio().setReadBpsThrottle(actual[0], actual[1], actual[2]);
-      int[] excepted = one.getBlkio().getReadBpsThrottle();
-      assertArrayEquals(actual, excepted);
+      Blkio.Record excepted = new Blkio.Record(8, 0, null, 200);
+      one.getBlkio().setReadBpsThrottle(excepted.major, excepted.minor, (int) excepted.value);
+      Blkio.Record actual = one.getBlkio().getReadBpsThrottle();
+      assertEquals(actual, excepted);
     } catch (IOException e) {
       LOG.error("Set read_bps_device failed.", e);
       assertTrue(false);
@@ -63,10 +63,10 @@ public class BlkioTest {
   @Test
   public void testSetWriteBpsThrottle() {
     try {
-      int[] actual = {8, 0, 200};
-      one.getBlkio().setWriteBpsThrottle(actual[0], actual[1], actual[2]);
-      int[] excepted = one.getBlkio().getWriteBpsThrottle();
-      assertArrayEquals(actual, excepted);
+      Blkio.Record excepted = new Blkio.Record(8, 0, null, 200);
+      one.getBlkio().setWriteBpsThrottle(excepted.major, excepted.minor, (int) excepted.value);
+      Blkio.Record actual = one.getBlkio().getWriteBpsThrottle();
+      assertEquals(actual, excepted);
     } catch (IOException e) {
       LOG.error("Set write_bps_device failed.", e);
       assertTrue(false);
@@ -76,10 +76,10 @@ public class BlkioTest {
   @Test
   public void testSetReadIopsThrottle() {
     try {
-      int[] actual = {8, 0, 200};
-      one.getBlkio().setReadIopsThrottle(actual[0], actual[1], actual[2]);
-      int[] excepted = one.getBlkio().getReadIopsThrottle();
-      assertArrayEquals(actual, excepted);
+      Blkio.Record excepted = new Blkio.Record(8, 0, null, 200);
+      one.getBlkio().setReadIopsThrottle(excepted.major, excepted.minor, (int) excepted.value);
+      Blkio.Record actual = one.getBlkio().getReadIopsThrottle();
+      assertEquals(actual, excepted);
     } catch (IOException e) {
       LOG.error("Set read_bps_device failed.", e);
       assertTrue(false);
@@ -89,10 +89,10 @@ public class BlkioTest {
   @Test
   public void testSetWriteIopsThrottle() {
     try {
-      int[] actual = {8, 0, 200};
-      one.getBlkio().setWriteIopsThrottle(actual[0], actual[1], actual[2]);
-      int[] excepted = one.getBlkio().getWriteIopsThrottle();
-      assertArrayEquals(actual, excepted);
+      Blkio.Record excepted = new Blkio.Record(8, 0, null, 200);
+      one.getBlkio().setWriteIopsThrottle(excepted.major, excepted.minor, (int) excepted.value);
+      Blkio.Record actual = one.getBlkio().getWriteIopsThrottle();
+      assertEquals(actual, excepted);
     } catch (IOException e) {
       LOG.error("Set read_bps_device failed.", e);
       assertTrue(false);
