@@ -33,60 +33,94 @@ public class Devices extends Common {
   }
 
   public static class Record {
+    char type;
+    int major;
+    int minor;
+    int accesses;
 
+    public Record(char type, int major, int minor, int accesses) {
+      this.type = type;
+      this.major = major;
+      this.minor = minor;
+      this.accesses = accesses;
+    }
+
+    public Record(String output) {
+      String[] splits = output.split("[: ]");
+      type = splits[0].charAt(0);
+      major = Integer.parseInt(splits[1]);
+      minor = Integer.parseInt(splits[2]);
+      accesses = Integer.parseInt(splits[3]);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append(type);
+      sb.append(' ');
+      sb.append(major);
+      sb.append(':');
+      sb.append(minor);
+      sb.append(' ');
+      sb.append(getAccessesFlag(accesses));
+
+      return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      Record actual = (Record) o;
+      boolean result = false;
+      if (type == actual.type
+              && major == actual.major
+              && minor == actual.minor
+              && accesses == actual.accesses) {
+        result = true;
+      }
+      return result;
+    }
+
+    public static Record[] parseRecordList(String output) {
+      String[] splits = output.split("/n");
+      Record[] records = new Record[splits.length];
+      for (int i = 0, l = splits.length; i < l; i++) {
+        records[i] = new Record(splits[i]);
+      }
+
+      return records;
+    }
+
+    public static StringBuilder getAccessesFlag(int accesses) {
+      StringBuilder sb = new StringBuilder();
+      if ((accesses & ACCESS_READ) != 0) {
+        sb.append(ACCESS_READ_CH);
+      }
+      if ((accesses & ACCESS_WRITE) != 0) {
+        sb.append(ACCESS_WRITE_CH);
+      }
+      if ((accesses & ACCESS_CREATE) != 0) {
+        sb.append(ACCESS_CREATE_CH);
+      }
+      return sb;
+    }
   }
 
-  public static StringBuilder getTypesFlag(int types) {
-    StringBuilder sb = new StringBuilder();
-    if ((types & TYPE_ALL) != 0) {
-      sb.append(TYPE_ALL_CH);
-    }
-    if ((types & TYPE_BLOCK) != 0) {
-      sb.append(TYPE_BLOCK_CH);
-    }
-    if ((types & TYPE_CHAR) != 0) {
-      sb.append(TYPE_CHAR_CH);
-    }
-    return sb;
+  private void setPermission(String prop, char type, int major, int minor, int accesses) throws IOException {
+    Record record = new Record(type, major, minor, accesses);
+
+    shell.cgset(group.getName(), prop, record.toString());
   }
 
-  public static StringBuilder getAccessesFlag(int accesses) {
-    StringBuilder sb = new StringBuilder();
-    if ((accesses & ACCESS_READ) != 0) {
-      sb.append(ACCESS_READ_CH);
-    }
-    if ((accesses & ACCESS_WRITE) != 0) {
-      sb.append(ACCESS_WRITE_CH);
-    }
-    if ((accesses & ACCESS_CREATE) != 0) {
-      sb.append(ACCESS_CREATE_CH);
-    }
-    return sb;
+  public void setAllow(char type, int major, int minor, int accesses) throws IOException {
+    setPermission(PROP_DEVICES_ALLOW, type, major, minor, accesses);
   }
 
-  private void setPermission(String prop, int types, int major, int minor, int accesses) throws IOException {
-    StringBuilder sb = getTypesFlag(types);
-    sb.append(' ');
-    sb.append(major);
-    sb.append(':');
-    sb.append(minor);
-    sb.append(' ');
-    sb.append(getAccessesFlag(accesses));
-
-    shell.cgset(group.getName(), prop, sb.toString());
+  public void setDeny(char type, int major, int minor, int accesses) throws IOException {
+    setPermission(PROP_DEVICES_DENY, type, major, minor, accesses);
   }
 
-  public void setAllow(int types, int major, int minor, int accesses) throws IOException {
-    setPermission(PROP_DEVICES_ALLOW, types, major, minor, accesses);
-  }
-
-  public void setDeny(int types, int major, int minor, int accesses) throws IOException {
-    setPermission(PROP_DEVICES_DENY, types, major, minor, accesses);
-  }
-
-  public String getList() throws IOException {
-    //TODO
-    String result = shell.cgget(group.getName(), PROP_DEVICES_LIST);
-    return result;
+  public Record[] getList() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_DEVICES_LIST);
+    return Record.parseRecordList(output);
   }
 }
