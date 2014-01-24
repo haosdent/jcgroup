@@ -12,13 +12,9 @@ public class Devices extends Common {
   public static final String PROP_DEVICES_DENY = "devices.deny";
   public static final String PROP_DEVICES_LIST = "devices.list";
 
-  public static final int TYPE_ALL = 1;
-  public static final int TYPE_BLOCK = 2;
-  public static final int TYPE_CHAR = 4;
-
-  public static final char TYPE_ALL_CH = 'a';
-  public static final char TYPE_BLOCK_CH = 'b';
-  public static final char TYPE_CHAR_CH = 'c';
+  public static final char TYPE_ALL = 'a';
+  public static final char TYPE_BLOCK = 'b';
+  public static final char TYPE_CHAR = 'c';
 
   public static final int ACCESS_READ = 1;
   public static final int ACCESS_WRITE = 2;
