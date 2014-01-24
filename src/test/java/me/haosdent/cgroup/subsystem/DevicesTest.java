@@ -50,7 +50,7 @@ public class DevicesTest {
   @Test
   public void testSetAllow() {
     try {
-      Devices.Record record = new Devices.Record('a', 8, 0, 2);
+      Devices.Record record = new Devices.Record(Devices.TYPE_ALL, 8, 0, 2);
       one.getDevices().setAllow(record.type, record.major, record.minor, record.accesses);
     } catch (IOException e) {
       LOG.error("Set allow failed.", e);
@@ -61,7 +61,7 @@ public class DevicesTest {
   @Test
   public void testSetDeny() {
     try {
-      Devices.Record record = new Devices.Record('a', 8, 0, 2);
+      Devices.Record record = new Devices.Record(Devices.TYPE_ALL, 8, 0, 2);
       one.getDevices().setDeny(record.type, record.major, record.minor, record.accesses);
     } catch (IOException e) {
       LOG.error("Set deny failed.", e);
