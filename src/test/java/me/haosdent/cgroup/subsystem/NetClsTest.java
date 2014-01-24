@@ -14,7 +14,4 @@ public class NetClsTest {
 
   @Test
   public void testSetClassId() {}
-
-  @Test
-  public void testGetClassId() {}
 }
