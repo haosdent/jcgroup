@@ -34,6 +34,7 @@ public class NetCls extends Common {
     shell.cgset(group.getName(), PROP_NET_CLS_CLASSID, sb.toString());
   }
 
+  //FIXME
   public int[] getClassId() throws IOException {
     String result = shell.cgget(group.getName(), PROP_NET_CLS_CLASSID);
     int major = Integer.getInteger(result.substring(2, 2 + 4), 16);
