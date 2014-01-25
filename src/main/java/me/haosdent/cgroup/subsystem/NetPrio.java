@@ -4,6 +4,8 @@ import me.haosdent.cgroup.manage.Group;
 import me.haosdent.cgroup.util.Constants;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NetPrio extends Common {
 
@@ -16,13 +18,19 @@ public class NetPrio extends Common {
   }
 
   public int getPrioId() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_NET_PRIO_PRIOIDX);
-    return Integer.parseInt(result);
+    String output = shell.cgget(group.getName(), PROP_NET_PRIO_PRIOIDX);
+    return Integer.parseInt(output);
   }
 
-  public String getIfPrioMap() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_NET_PRIO_IFPRIOMAP);
-    return result;
+  public Map<String, Integer> getIfPrioMap() throws IOException {
+    String output = shell.cgget(group.getName(), PROP_NET_PRIO_IFPRIOMAP);
+    String[] splits = output.split("\n");
+    Map<String, Integer> ifPrioMap = new HashMap<String, Integer>();
+    for (String split : splits) {
+      String[] tmpSplits = split.split(" ");
+      ifPrioMap.put(tmpSplits[0], Integer.parseInt(tmpSplits[1]));
+    }
+    return ifPrioMap;
   }
 
   public void addIfPrioMap(String iface, int priority) throws IOException {
