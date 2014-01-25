@@ -34,11 +34,11 @@ public class NetCls extends Common {
     shell.cgset(group.getName(), PROP_NET_CLS_CLASSID, sb.toString());
   }
 
-  //FIXME
   public int[] getClassId() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_NET_CLS_CLASSID);
-    int major = Integer.getInteger(result.substring(2, 2 + 4), 16);
-    int minor = Integer.getInteger(result.substring(6, 6 + 4), 16);
+    String output = shell.cgget(group.getName(), PROP_NET_CLS_CLASSID);
+    output = Integer.toHexString(Integer.parseInt(output));
+    int major = Integer.getInteger(output.substring(0, output.length() - 5), 16);
+    int minor = Integer.getInteger(output.substring(output.length() - 4, output.length() - 1), 16);
     int[] classId = {major, minor};
     return classId;
   }
