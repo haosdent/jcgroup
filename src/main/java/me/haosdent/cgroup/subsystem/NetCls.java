@@ -14,6 +14,11 @@ public class NetCls extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   private StringBuilder toHex(int num) {
     String hex = Integer.toHexString(num);
     StringBuilder sb = new StringBuilder();

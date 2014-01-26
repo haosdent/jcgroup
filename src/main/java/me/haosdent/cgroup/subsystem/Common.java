@@ -39,8 +39,12 @@ public abstract class Common {
     return shell;
   }
 
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public void addTask(int task) throws IOException {
-    shell.cgclassify(group.getName(), SUBSYS, task);
+    shell.cgclassify(group.getName(), getSubsys(), task);
     taskList.add(task);
   }
 

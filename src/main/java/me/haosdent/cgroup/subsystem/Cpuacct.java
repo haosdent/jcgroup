@@ -20,6 +20,11 @@ public class Cpuacct extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public static class Stat {
     public final long userTime;
     public final long systemTime;

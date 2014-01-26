@@ -89,7 +89,7 @@ public class Shell {
       String output = IOUtils.toString(process.getInputStream());
       String errorOutput = IOUtils.toString(process.getErrorStream());
       LOG.info("Shell Output:" + output);
-      if (errorOutput.length() != 0 && !errorOutput.contains("[sudo] password for")) {
+      if (errorOutput.length() != 0 && !errorOutput.contains("[sudo] password for") && !errorOutput.contains("Password:")) {
         LOG.error("Shell Error Output:" + errorOutput);
         throw new IOException(errorOutput);
       }

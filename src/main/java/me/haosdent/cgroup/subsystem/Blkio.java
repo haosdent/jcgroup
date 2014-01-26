@@ -35,6 +35,11 @@ public class Blkio extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   private void setThrottle(String prop, int major, int minor, int speed) throws IOException {
     Record record = new Record(major, minor, null, speed);
     shell.cgset(group.getName(), prop, record.toString());

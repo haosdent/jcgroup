@@ -26,6 +26,11 @@ public class Cpuset extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public void setCpus(int[] nums) throws IOException {
     StringBuilder sb = new StringBuilder();
     for (int num : nums) {

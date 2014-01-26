@@ -18,6 +18,11 @@ public class Freezer extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public void setState(String state) throws IOException {
     shell.cgset(group.getName(), PROP_FREEZER_STATE, state);
   }

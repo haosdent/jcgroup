@@ -17,6 +17,11 @@ public class NetPrio extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public int getPrioId() throws IOException {
     String output = shell.cgget(group.getName(), PROP_NET_PRIO_PRIOIDX);
     return Integer.parseInt(output);

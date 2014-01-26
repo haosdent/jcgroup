@@ -28,6 +28,11 @@ public class Devices extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public static class Record {
     char type;
     int major;

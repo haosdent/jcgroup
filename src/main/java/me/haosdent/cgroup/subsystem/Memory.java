@@ -26,6 +26,11 @@ public class Memory extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public static class Stat {
     public final long cacheSize;
     public final long rssSize;

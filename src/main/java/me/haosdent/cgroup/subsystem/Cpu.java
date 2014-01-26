@@ -23,6 +23,11 @@ public class Cpu extends Common {
     super(group);
   }
 
+  @Override
+  public int getSubsys() {
+    return SUBSYS;
+  }
+
   public static class Stat {
     public final int nrPeriods;
     public final int nrThrottled;
