@@ -32,7 +32,7 @@ public class Constants {
   public static final String SUBSYS_CPU_STR = "cpu";
   public static final String SUBSYS_CPUACCT_STR = "cpuacct";
   public static final String SUBSYS_CPUSET_STR = "cpuset";
-  public static final String SUBSYS_DEVICE_STR = "device";
+  public static final String SUBSYS_DEVICE_STR = "devices";
   public static final String SUBSYS_FREEZER_STR = "freezer";
   public static final String SUBSYS_MEMORY_STR = "memory";
   public static final String SUBSYS_NET_CLS_STR = "net_cls";

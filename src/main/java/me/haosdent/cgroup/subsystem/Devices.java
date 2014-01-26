@@ -47,11 +47,25 @@ public class Devices extends Common {
     }
 
     public Record(String output) {
+      if (output.contains("*")) {
+        output = output.replaceAll("\\*", "-1");
+      }
       String[] splits = output.split("[: ]");
       type = splits[0].charAt(0);
       major = Integer.parseInt(splits[1]);
       minor = Integer.parseInt(splits[2]);
-      accesses = Integer.parseInt(splits[3]);
+      accesses = 0;
+      for (char c : splits[3].toCharArray()) {
+        if (c == ACCESS_READ_CH) {
+          accesses |= ACCESS_READ;
+        }
+        if (c == ACCESS_CREATE_CH) {
+          accesses |= ACCESS_CREATE;
+        }
+        if (c == ACCESS_WRITE_CH) {
+          accesses |= ACCESS_WRITE;
+        }
+      }
     }
 
     @Override
