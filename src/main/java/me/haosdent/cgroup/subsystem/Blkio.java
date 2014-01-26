@@ -64,7 +64,7 @@ public class Blkio extends Common {
     }
 
     public Record(String output) {
-      String[] splits = output.split("[: ]");
+      String[] splits = output.split("[:\\s]");
       major = Integer.parseInt(splits[0]);
       minor = Integer.parseInt(splits[1]);
       if (splits.length > 3) {
@@ -76,12 +76,15 @@ public class Blkio extends Common {
     }
 
     public static Record[] parseRecordList(String output) {
-      output = output.substring(0, output.indexOf("Total"));
-
-      String[] splits = output.split("/n");
-      Record[] records = new Record[splits.length];
-      for (int i = 0, l = splits.length; i < l; i++) {
-        records[i] = new Record(splits[i]);
+      String[] splits = output.split("\n");
+      // Skip Last Total Item.
+      int len = splits.length;
+      if (splits[splits.length - 1].trim().indexOf("Total") == 0) {
+        len--;
+      }
+      Record[] records = new Record[len];
+      for (int i = 0, l = len; i < l; i++) {
+        records[i] = new Record(splits[i].trim());
       }
 
       return records;

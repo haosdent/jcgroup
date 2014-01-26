@@ -165,26 +165,25 @@ public class BlkioTest {
   }
 
   //TODO
-  @Test
+  //@Test
   public void testGetAvgQueueSize() {}
 
   //TODO
-  @Test
+  //@Test
   public void testGetGroupWaitTime() {}
 
   //TODO
-  @Test
+  //@Test
   public void testGetEmptyTime() {}
 
   //TODO
-  @Test
+  //@Test
   public void testGetIdleTime() {}
 
   //TODO
-  @Test
+  //@Test
   public void testGetDequeueCount() {}
 
-  //TODO
   @Test
   public void testGetIoServiceCount() {
     try {

@@ -48,7 +48,9 @@ public class Devices extends Common {
 
     public Record(String output) {
       if (output.contains("*")) {
+        System.out.println("Pre:" + output);
         output = output.replaceAll("\\*", "-1");
+        System.out.println("After:" + output);
       }
       String[] splits = output.split("[: ]");
       type = splits[0].charAt(0);
