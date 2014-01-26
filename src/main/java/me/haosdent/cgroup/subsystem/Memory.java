@@ -11,8 +11,8 @@ public class Memory extends Common {
   public static final String PROP_MEMORY_STAT = "memory.stat";
   public static final String PROP_MEMORY_USAGE_IN_BYTES = "memory.usage_in_bytes";
   public static final String PROP_MEMORY_MEMSW_USAGE_IN_BYTES = "memory.memsw.usage_in_bytes";
-  public static final String PROP_MEMORY_MAX_USAGE_IN_BYTES = "memory.max_in_bytes";
-  public static final String PROP_MEMORY_MEMSW_MAX_USAGE_IN_BYTES = "memory.memsw.usage_in_bytes";
+  public static final String PROP_MEMORY_MAX_USAGE_IN_BYTES = "memory.max_usage_in_bytes";
+  public static final String PROP_MEMORY_MEMSW_MAX_USAGE_IN_BYTES = "memory.memsw.max_usage_in_bytes";
   public static final String PROP_MEMORY_LIMIT_IN_BYTES = "memory.limit_in_bytes";
   public static final String PROP_MEMORY_MEMSW_LIMIT_IN_BYTES = "memory.memsw.limit_in_bytes";
   public static final String PROP_MEMORY_FAILCNT = "memory.failcnt";
@@ -112,7 +112,7 @@ public class Memory extends Common {
   }
 
   public long getMaxWithSwapUsage() throws IOException {
-    String result = shell.cgget(group.getName(), PROP_MEMORY_MEMSW_USAGE_IN_BYTES);
+    String result = shell.cgget(group.getName(), PROP_MEMORY_MEMSW_MAX_USAGE_IN_BYTES);
     return Long.parseLong(result);
   }
 
@@ -162,7 +162,7 @@ public class Memory extends Common {
   }
 
   public boolean isUseHierarchy() throws IOException {
-    int output = Integer.getInteger(shell.cgget(group.getName(), PROP_MEMORY_USE_HIERARCHY));
+    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_MEMORY_USE_HIERARCHY));
     return output > 0;
   }
 

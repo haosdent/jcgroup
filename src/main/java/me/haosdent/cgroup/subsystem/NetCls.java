@@ -20,7 +20,7 @@ public class NetCls extends Common {
   }
 
   private StringBuilder toHex(int num) {
-    String hex = Integer.toHexString(num);
+    String hex = num + "";
     StringBuilder sb = new StringBuilder();
     int l = hex.length();
     if (l > 4) {
@@ -34,7 +34,8 @@ public class NetCls extends Common {
   }
 
   public void setClassId(int major, int minor) throws IOException {
-    StringBuilder sb = toHex(major);
+    StringBuilder sb = new StringBuilder("0x");
+    sb.append(toHex(major));
     sb.append(toHex(minor));
     shell.cgset(group.getName(), PROP_NET_CLS_CLASSID, sb.toString());
   }
@@ -42,8 +43,8 @@ public class NetCls extends Common {
   public int[] getClassId() throws IOException {
     String output = shell.cgget(group.getName(), PROP_NET_CLS_CLASSID);
     output = Integer.toHexString(Integer.parseInt(output));
-    int major = Integer.getInteger(output.substring(0, output.length() - 5), 16);
-    int minor = Integer.getInteger(output.substring(output.length() - 4, output.length() - 1), 16);
+    int major = Integer.parseInt(output.substring(0, output.length() - 4));
+    int minor = Integer.parseInt(output.substring(output.length() - 4));
     int[] classId = {major, minor};
     return classId;
   }

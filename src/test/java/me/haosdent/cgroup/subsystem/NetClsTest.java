@@ -50,7 +50,7 @@ public class NetClsTest {
   @Test
   public void testSetClassId() {
     try {
-      int[] excepted = {1, 1};
+      int[] excepted = {10, 1};
       one.getNetCls().setClassId(excepted[0], excepted[1]);
       int[] actual = one.getNetCls().getClassId();
       assertArrayEquals(excepted, actual);
