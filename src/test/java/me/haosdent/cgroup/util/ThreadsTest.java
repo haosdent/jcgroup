@@ -28,22 +28,4 @@ public class ThreadsTest {
       assertTrue(false);
     }
   }
-
-  public static void main(String[] args) {
-    Thread thread = new Thread() {
-      @Override
-      public void run() {
-        int id = Threads.getThreadId();
-        LOG.info("Thread Id: " + id);
-        assertTrue(id != 0);
-      }
-    };
-    thread.start();
-    try {
-      thread.join();
-    } catch (InterruptedException e) {
-      LOG.error("Thread Error.", e);
-      assertTrue(false);
-    }
-  }
 }
