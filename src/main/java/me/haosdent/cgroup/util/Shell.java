@@ -138,8 +138,8 @@ public class Shell {
   public void cgclassify(String group, int subsystems, int task)
       throws IOException {
     String cmd =
-        String.format(SHELL_CG_CLASSIFY, group, getSubsystemsFlag(subsystems),
-            task);
+        String.format(SHELL_CG_CLASSIFY, getSubsystemsFlag(subsystems), group,
+                task);
     exec(cmd, true);
   }
 
