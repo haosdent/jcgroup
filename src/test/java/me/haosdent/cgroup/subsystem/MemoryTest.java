@@ -178,13 +178,13 @@ public class MemoryTest {
     }
   }
 
-  //FIXME
-  //@Test
+  @Test
   public void testSetOomControl() {
     try {
-      one.getMemory().getPhysicalUsage();
+      one.getMemory().setOomControl(true);
+      assertTrue(one.getMemory().isOomControl());
     } catch (IOException e) {
-      LOG.error("Set throttle.read_bps_device failed.", e);
+      LOG.error("Set oom_control failed.", e);
       assertTrue(false);
     }
   }

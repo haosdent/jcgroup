@@ -172,7 +172,9 @@ public class Memory extends Common {
   }
 
   public boolean isOomControl() throws IOException {
-    int output = Integer.parseInt(shell.cgget(group.getName(), PROP_MEMORY_OOM_CONTROL));
-    return output > 0;
+    String output = shell.cgget(group.getName(), PROP_MEMORY_OOM_CONTROL);
+    output = output.split("\n")[0].split("[\\s]")[1];
+    int value = Integer.parseInt(output);
+    return value > 0;
   }
 }
