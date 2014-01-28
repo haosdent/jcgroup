@@ -6,16 +6,16 @@ jcgroup is a cgroup wrapper on JVM. You could use this library to limit the CPU 
 
 ## Subsystems
 
-* ✓ blkio
-* ✓ common
-* ✓ cpu
-* ✓ cpuacct
-* ✓ cpuset
-* ✓ devices
-* ✓ freezer
-* ✓ memory
-* ✓ net_cls
-* ✓ net_prio
+☑ blkio<br/>
+☑ common<br/>
+☑ cpu<br/>
+☑ cpuacct<br/>
+☑ cpuset<br/>
+☑ devices<br/>
+☑ freezer<br/>
+☑ memory<br/>
+☑ net_cls<br/>
+☑ net_prio<br/>
 
 ## Example
 
