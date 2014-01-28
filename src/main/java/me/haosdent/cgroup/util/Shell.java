@@ -131,7 +131,13 @@ public class Shell {
   }
 
   public void cgdelete(String group, int subsystems) throws IOException {
-    String cmd = String.format(SHELL_CG_DELETE, getSubsystemsFlag(subsystems), group);
+    //TODO
+    //Not sure if this bug comes from Ubuntu.
+    //String cmd = String.format(SHELL_CG_DELETE, getSubsystemsFlag(subsystems), group);
+    String flag = getSubsystemsFlag(subsystems) + "";
+    flag = flag.split(",")[0];
+    String cmd = String.format(SHELL_CG_DELETE, flag, group);
+
     exec(cmd, true);
   }
 
