@@ -110,4 +110,4 @@ public class ExampleTest {
 * Linux version (>= 2.6.18)
 
 
-  [1]: https://lh3.googleusercontent.com/gt4aAPISzym6ayNSCI1DAJppgxUwibPOSbp3sRvdhlA=s600 "jcgroup_example_cpu"
+  [1]: https://raw.github.com/haosdent/jcgroup/master/img/jcgroup_example_cpu.jpg
