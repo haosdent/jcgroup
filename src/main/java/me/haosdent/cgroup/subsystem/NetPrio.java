@@ -33,7 +33,7 @@ public class NetPrio extends Common {
     Map<String, Integer> ifPrioMap = new HashMap<String, Integer>();
     for (String split : splits) {
       String[] tmpSplits = split.split(" ");
-      ifPrioMap.put(tmpSplits[0], Integer.parseInt(tmpSplits[1]));
+      ifPrioMap.put(tmpSplits[0].trim(), Integer.parseInt(tmpSplits[1]));
     }
     return ifPrioMap;
   }
