@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Jcgroup by haosdent</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Jcgroup</h1>
+        <p>Cgroup on JVM</p>
+
+        <p class="view"><a href="https://github.com/haosdent/jcgroup">View the Project on GitHub <small>haosdent/jcgroup</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/haosdent/jcgroup/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/haosdent/jcgroup/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/haosdent/jcgroup">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="jcgroup" class="anchor" href="#jcgroup"><span class="octicon octicon-link"></span></a>jcgroup</h1>
+
+<p><a href="https://travis-ci.org/haosdent/jcgroup"><img src="https://travis-ci.org/haosdent/jcgroup.png?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/haosdent/jcgroup?branch=master"><img src="https://coveralls.io/repos/haosdent/jcgroup/badge.png?branch=master" alt="Coverage Status"></a></p>
+
+<p>jcgroup is a cgroup wrapper on JVM. You could use this library to limit the CPU shares, Disk I/O speed, Network bandwidth and etc of a thread.</p>
+
+<h2>
+<a name="subsystems" class="anchor" href="#subsystems"><span class="octicon octicon-link"></span></a>Subsystems</h2>
+
+<p>☑ blkio<br>
+☑ common<br>
+☑ cpu<br>
+☑ cpuacct<br>
+☑ cpuset<br>
+☑ devices<br>
+☑ freezer<br>
+☑ memory<br>
+☑ net_cls<br>
+☑ net_prio<br></p>
+
+<h2>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<blockquote>
+<p>This code snippet create two threads and set different cpu shares of them. One is 512 while another is 2048.</p>
+</blockquote>
+
+<p>![jcgroup_example_cpu][1]</p>
+
+<div class="highlight highlight-java"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExampleTest</span> <span class="o">{</span>
+
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOG</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ExampleTest</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="n">Admin</span> <span class="n">admin</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="n">Group</span> <span class="n">root</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="n">Group</span> <span class="n">one</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="n">Group</span> <span class="n">two</span><span class="o">;</span>
+
+  <span class="nd">@BeforeClass</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">setUpClass</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">admin</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Admin</span><span class="o">(</span><span class="n">Constants</span><span class="o">.</span><span class="na">SUBSYS_CPUSET</span> <span class="o">|</span> <span class="n">Constants</span><span class="o">.</span><span class="na">SUBSYS_CPU</span><span class="o">);</span>
+      <span class="n">root</span> <span class="o">=</span> <span class="n">admin</span><span class="o">.</span><span class="na">getRootGroup</span><span class="o">();</span>
+      <span class="n">one</span> <span class="o">=</span> <span class="n">admin</span><span class="o">.</span><span class="na">createGroup</span><span class="o">(</span><span class="s">"one"</span><span class="o">,</span> <span class="n">Constants</span><span class="o">.</span><span class="na">SUBSYS_CPUSET</span> <span class="o">|</span> <span class="n">Constants</span><span class="o">.</span><span class="na">SUBSYS_CPU</span><span class="o">);</span>
+      <span class="n">two</span> <span class="o">=</span> <span class="n">admin</span><span class="o">.</span><span class="na">createGroup</span><span class="o">(</span><span class="s">"two"</span><span class="o">,</span> <span class="n">Constants</span><span class="o">.</span><span class="na">SUBSYS_CPUSET</span> <span class="o">|</span> <span class="n">Constants</span><span class="o">.</span><span class="na">SUBSYS_CPU</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Create cgroup Failed."</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+      <span class="n">assertTrue</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="nd">@AfterClass</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">tearDownClass</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">admin</span><span class="o">.</span><span class="na">umount</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Umount cgroup failed."</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+      <span class="n">assertTrue</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Test</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCpu</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+      <span class="n">one</span><span class="o">.</span><span class="na">getCpuset</span><span class="o">().</span><span class="na">setCpus</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">});</span>
+      <span class="n">two</span><span class="o">.</span><span class="na">getCpuset</span><span class="o">().</span><span class="na">setCpus</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">});</span>
+      <span class="n">one</span><span class="o">.</span><span class="na">getCpuset</span><span class="o">().</span><span class="na">setMems</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">});</span>
+      <span class="n">two</span><span class="o">.</span><span class="na">getCpuset</span><span class="o">().</span><span class="na">setMems</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">0</span><span class="o">});</span>
+      <span class="n">one</span><span class="o">.</span><span class="na">getCpu</span><span class="o">().</span><span class="na">setShares</span><span class="o">(</span><span class="mi">512</span><span class="o">);</span>
+      <span class="n">two</span><span class="o">.</span><span class="na">getCpu</span><span class="o">().</span><span class="na">setShares</span><span class="o">(</span><span class="mi">2048</span><span class="o">);</span>
+      <span class="kd">final</span> <span class="n">Group</span> <span class="n">oneTmp</span> <span class="o">=</span> <span class="n">one</span><span class="o">;</span>
+      <span class="kd">final</span> <span class="n">Group</span> <span class="n">twoTmp</span> <span class="o">=</span> <span class="n">two</span><span class="o">;</span>
+      <span class="k">new</span> <span class="nf">Thread</span><span class="o">(){</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+          <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">Threads</span><span class="o">.</span><span class="na">getThreadId</span><span class="o">();</span>
+          <span class="n">LOG</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Thread id:"</span> <span class="o">+</span> <span class="n">id</span><span class="o">);</span>
+          <span class="k">try</span> <span class="o">{</span>
+            <span class="n">oneTmp</span><span class="o">.</span><span class="na">getCpu</span><span class="o">().</span><span class="na">addTask</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Test cpu failed."</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="n">assertTrue</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+          <span class="o">}</span>
+        <span class="o">}</span>
+      <span class="o">}.</span><span class="na">start</span><span class="o">();</span>
+      <span class="k">new</span> <span class="nf">Thread</span><span class="o">(){</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+          <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">Threads</span><span class="o">.</span><span class="na">getThreadId</span><span class="o">();</span>
+          <span class="n">LOG</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"Thread id:"</span> <span class="o">+</span> <span class="n">id</span><span class="o">);</span>
+          <span class="k">try</span> <span class="o">{</span>
+            <span class="n">twoTmp</span><span class="o">.</span><span class="na">getCpu</span><span class="o">().</span><span class="na">addTask</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+            <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+          <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Test cpu failed."</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="n">assertTrue</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+          <span class="o">}</span>
+        <span class="o">}</span>
+      <span class="o">}.</span><span class="na">start</span><span class="o">();</span>
+      <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">60000</span><span class="n">l</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Test cpu failed."</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+      <span class="n">assertTrue</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>
+<p>Linux version (&gt;= 2.6.18)</p>
+
+<p>[1]: <a href="https://lh3.googleusercontent.com/gt4aAPISzym6ayNSCI1DAJppgxUwibPOSbp3sRvdhlA=s600">https://lh3.googleusercontent.com/gt4aAPISzym6ayNSCI1DAJppgxUwibPOSbp3sRvdhlA=s600</a> "jcgroup_example_cpu</p>
+</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/haosdent">haosdent</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
