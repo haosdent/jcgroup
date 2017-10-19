@@ -20,7 +20,7 @@ jcgroup is a cgroup wrapper on JVM. You could use this library to limit the CPU 
 
 ## Example
 
->This code snippet create two threads and set different cpu shares of them. One is 512 while another is 2048.
+> This code snippet create two threads and set different cpu shares of them. One is 512 while another is 2048.
 
 ![jcgroup_example_cpu][1]
 
@@ -104,13 +104,20 @@ public class ExampleTest {
 }
 ```
 
+The wrapper requires a configuration file that defines the user and the password used to create the tasks. That user must be able to run `sudo`. You must add a `user_conf` file to the classpath, e.g. in the `/src/main/resources` or the `/src/test/resources` project folder, using the following format:
+
+```
+{
+	"name" : "james",
+	"password" : "bond"  
+}
+``` 
 
 
 ## Requirements
 
 * Linux version (>= 2.6.18)
-* cgroups management tools. In Ubuntu or Debian, you may install the tools using:
-``sudo apt-get install cgroup-bin``     
+* cgroups management tools. In Ubuntu or Debian, you may install the tools using: ``sudo apt-get install cgroup-bin``     
 
   [1]: https://raw.github.com/haosdent/jcgroup/master/img/jcgroup_example_cpu.jpg
 
