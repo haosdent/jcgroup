@@ -1,4 +1,4 @@
-#jcgroup
+# jcgroup
 
 [![Build Status](https://travis-ci.org/haosdent/jcgroup.png?branch=master)](https://travis-ci.org/haosdent/jcgroup) [![Coverage Status](https://coveralls.io/repos/haosdent/jcgroup/badge.png?branch=master)](https://coveralls.io/r/haosdent/jcgroup?branch=master)
 
@@ -16,6 +16,7 @@ jcgroup is a cgroup wrapper on JVM. You could use this library to limit the CPU 
 ☑ memory<br/>
 ☑ net_cls<br/>
 ☑ net_prio<br/>
+
 
 ## Example
 
@@ -108,7 +109,8 @@ public class ExampleTest {
 ## Requirements
 
 * Linux version (>= 2.6.18)
-
+* cgroups management tools. In Ubuntu or Debian, you may install the tools using:
+``sudo apt-get install cgroup-bin``     
 
   [1]: https://raw.github.com/haosdent/jcgroup/master/img/jcgroup_example_cpu.jpg
 
