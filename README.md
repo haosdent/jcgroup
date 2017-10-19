@@ -1,4 +1,4 @@
-#jcgroup
+# jcgroup
 
 [![Build Status](https://travis-ci.org/haosdent/jcgroup.png?branch=master)](https://travis-ci.org/haosdent/jcgroup) [![Coverage Status](https://coveralls.io/repos/haosdent/jcgroup/badge.png?branch=master)](https://coveralls.io/r/haosdent/jcgroup?branch=master)
 
@@ -103,12 +103,20 @@ public class ExampleTest {
 }
 ```
 
+The wrapper requires a configuration file that defines the user and the password used to create the tasks. That user must be able to run `sudo`. You must add a `user_conf` file to the classpath, e.g. in the `/src/main/resources` or the `/src/test/resources` project folder, using the following format:
+
+```
+{
+	"name" : "james",
+	"password" : "bond"  
+}
+``` 
 
 
 ## Requirements
 
 * Linux version (>= 2.6.18)
-
+* cgroups management tools. In Ubuntu or Debian, you may install the tools using: ``sudo apt-get install cgroup-bin``
 
   [1]: https://raw.github.com/haosdent/jcgroup/master/img/jcgroup_example_cpu.jpg
 
