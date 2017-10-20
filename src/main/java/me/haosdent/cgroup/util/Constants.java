@@ -6,8 +6,6 @@ public class Constants {
 
   public static final String SHELL_MKDIR = "mkdir -p %s";
   public static final String SHELL_RMDIR = "rm -rf %s";
-  public static final String SHELL_MOUNT = "mount -t cgroup -o%s %s %s";
-  public static final String SHELL_UMOUNT = "umount %s";
 
   public static final String SHELL_CG_CLEAR = "cgclear";
   public static final String SHELL_CG_CREATE = "cgcreate -g %s:%s";

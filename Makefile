@@ -1,5 +1,10 @@
+# Makefile for jcgroup
+
+ifndef JAVA_HOME
+	JAVA_HOME=$(shell readlink -f /usr/bin/javac | sed "s:bin/javac::")
+endif
 CC=gcc
-CFLAGS=-fPIC -lc -shared -I/usr/lib/jvm/java-1.6.0/include/ -I/usr/lib/jvm/java-1.6.0/include/linux/
+CFLAGS=-fPIC -lc -shared -I${JAVA_HOME}/include/ -I${JAVA_HOME}/include/linux/
 OUTPUT=libThreads.so
 
 SOURCES_DIR=src/main/native
