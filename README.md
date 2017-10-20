@@ -117,7 +117,8 @@ The wrapper requires a configuration file that defines the user and the password
 ## Requirements
 
 * Linux version (>= 2.6.18)
-* cgroups management tools. In Ubuntu or Debian, you may install the tools using: ``sudo apt-get install cgroup-bin``     
+* cgroups management tools. In Ubuntu or Debian, you may install the tools using:
+``sudo apt-get install cgroup-bin``     
 
   [1]: https://raw.github.com/haosdent/jcgroup/master/img/jcgroup_example_cpu.jpg
 
