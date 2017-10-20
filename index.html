@@ -137,16 +137,25 @@
 <span class="o">}</span>
 </pre></div>
 
+<p>The wrapper requires a configuration file that defines the user and the password used to create the tasks. That user must be able to run <code>sudo</code>. You must add a <code>user_conf</code> file to the classpath, e.g. in the <code>/src/main/resources</code> or the <code>/src/test/resources</code> project folder, using the following format:</p>
+<pre><code>{
+	"name" : "james",
+	"password" : "bond"  
+}
+</code></pre>
+
 <h2>
 <a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
 
 <ul>
-<li>
-<p>Linux version (&gt;= 2.6.18)</p>
-
-<p>[1]: <a href="https://lh3.googleusercontent.com/gt4aAPISzym6ayNSCI1DAJppgxUwibPOSbp3sRvdhlA=s600">https://lh3.googleusercontent.com/gt4aAPISzym6ayNSCI1DAJppgxUwibPOSbp3sRvdhlA=s600</a> "jcgroup_example_cpu</p>
-</li>
+<li>Linux version (&gt;= 2.6.18)</li>
+<li>cgroups management tools. In Ubuntu or Debian, you may install the tools using: <code>sudo apt-get install cgroup-bin</code></li>
 </ul>
+
+<h2><a name="license" href="#license" class="anchor"></a>License</h2>
+<p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at (<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>).
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. See accompanying LICENSE file.</p>
+
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/haosdent">haosdent</a></p>
