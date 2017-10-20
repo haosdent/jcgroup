@@ -49,7 +49,6 @@ public class Admin {
     this.password = password;
     this.subsystems = subsystems;
     this.shell = new Shell(this);
-    shell.mount(name, subsystems);
     this.rootGroup = new Group(this, PATH_ROOT, subsystems, true);
   }
 
@@ -58,7 +57,6 @@ public class Admin {
     for (Object group : groups) {
       ((Group) group).delete();
     }
-    shell.umount(name);
   }
 
   public Shell getShell() {
