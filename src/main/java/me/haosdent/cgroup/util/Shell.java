@@ -17,15 +17,20 @@ public class Shell {
 
   private static final Logger LOG = LoggerFactory.getLogger(Shell.class);
   Admin admin;
+
+  String hiddenPasswordPrefix;
   String prefix;
 
   public Shell(Admin admin) {
     this.admin = admin;
+    
     StringBuilder sb = new StringBuilder();
     sb.append("echo ");
     sb.append(admin.getPassword());
     sb.append("|sudo -S ");
     this.prefix = sb.toString();
+    
+    this.hiddenPasswordPrefix = "echo ***** | sudo -S ";   
   }
 
   @VisibleForTesting
@@ -79,10 +84,12 @@ public class Shell {
   }
 
   public String exec(String cmd, boolean isPrivilege) throws IOException {
-    if (isPrivilege) {
+	LOG.info("Shell cmd:" + (isPrivilege ? hiddenPasswordPrefix : "") + cmd); 
+    
+	if (isPrivilege) {      
       cmd = prefix + cmd;
     }
-    LOG.info("Shell cmd:" + cmd);
+	
     Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", cmd});
     try {
       process.waitFor();
@@ -97,21 +104,6 @@ public class Shell {
     } catch (InterruptedException ie) {
       throw new IOException(ie.toString());
     }
-  }
-
-  public void mount(String name, int subsystems) throws IOException {
-    String path = String.format(PREFIX_CGROUP_DIR, name);
-    mkdir(path);
-    StringBuilder flag = getSubsystemsFlag(subsystems);
-    String cmd = String.format(SHELL_MOUNT, flag, flag, path);
-    exec(cmd, true);
-  }
-
-  public void umount(String name) throws IOException {
-    String path = String.format(PREFIX_CGROUP_DIR, name);
-    String cmd = String.format(SHELL_UMOUNT, path);
-    exec(cmd, true);
-    rmdir(path);
   }
 
   public void mkdir(String path) throws IOException {
